@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pawtners Animation</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 500vh;
+        background: linear-gradient(to bottom, #f0e2d4 0%, #fef5eb 50%, #f0e2d4 100%);
+        overflow-x: hidden;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .stage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .scene {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .scene img {
+        position: absolute;
+        transition: all 0.3s ease-out;
+        opacity: 0;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+
+    /* Human standing */
+    #humanStanding {
+        width: 250px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Human hugging */
+    #humanHug {
+        width: 250px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Cat enters from left edge of screen */
+    #cat {
+        width: 110px;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Dog enters from right edge of screen */
+    #dog {
+        width: 110px;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Final logo */
+    #logo {
+        width: 300px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+        filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+    }
+
+    /* Welcome text */
+    #welcomeText {
+        position: absolute;
+        left: 50%;
+        top: 78%;
+        transform: translateX(-50%) translateY(20px);
+        text-align: center;
+        opacity: 0;
+        color: #6b4423;
+        font-size: 36px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        white-space: nowrap;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    #welcomeText .subtitle {
+        display: block;
+        font-size: 20px;
+        font-weight: normal;
+        margin-top: 12px;
+        letter-spacing: 4px;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+        position: fixed;
+        bottom: 7px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #a0826d;
+        font-size: 14px;
+        text-align: center;
+        opacity: 0;
+        animation: fadeInOut 3s ease-in-out infinite;
+        pointer-events: none;
+        letter-spacing: 2px;
+    }
+
+    .scroll-hint::after {
+        content: '↓';
+        display: block;
+        font-size: 24px;
+        margin-top: 5px;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 0.6; }
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+    <div class="scene">
+        <img id="cat" src="cat-02.svg" alt="Cat">
+        <img id="dog" src="dog-03.svg" alt="Dog">
+        <img id="humanStanding" src="human-standing-05.svg" alt="Human standing">
+        <img id="humanHug" src="human-open-arms-04.svg" alt="Human with open arms">
+        <img id="logo" src="logo-heart.svg" alt="Logo">
+        <div id="welcomeText">
+            Welcome to
+            <span class="subtitle">PAWtners Event Guide</span>
+        </div>
+    </div>
+</div>
+
+<div class="scroll-hint">Scroll to begin</div>
+
+<script>
+const cat = document.getElementById("cat");
+const dog = document.getElementById("dog");
+const humanStanding = document.getElementById("humanStanding");
+const humanHug = document.getElementById("humanHug");
+const logo = document.getElementById("logo");
+const welcomeText = document.getElementById("welcomeText");
+const subtitle = welcomeText.querySelector('.subtitle');
+const scrollHint = document.querySelector('.scroll-hint');
+
+// Smooth easing functions
+function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+}
+
+function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+}
+
+function animate() {
+    const totalScroll = document.body.scrollHeight - window.innerHeight;
+    const scroll = window.scrollY / totalScroll;
+    const p = Math.min(scroll * 100, 100);
+
+    // Hide scroll hint after scrolling starts
+    if (p > 2) {
+        scrollHint.style.opacity = '0';
+    } else {
+        scrollHint.style.opacity = '1';
+    }
+
+    /* Phase 1 — Human appears with gentle fade (0–15%) */
+    if (p <= 15) {
+        let t = easeInOutCubic(p / 15);
+        humanStanding.style.opacity = t;
+        humanStanding.style.transform = `translate(-50%, -50%) scale(${0.8 + (t * 0.2)})`;
+    }
+
+    /* Phase 2 — Human stays standing, pets appear and start running (15–25%) */
+    if (p >= 15 && p <= 25) {
+        let t = easeOutCubic((p - 15) / 10);
+        let fadeT = Math.min((p - 15) / 4, 1);
+
+        humanStanding.style.opacity = 1;
+        humanStanding.style.transform = 'translate(-50%, -50%) scale(1)';
+        
+        cat.style.opacity = fadeT;
+        dog.style.opacity = fadeT;
+
+        // Calculate center position
+        let centerX = window.innerWidth / 2;
+        
+        // Pets start at screen edges and begin moving
+        let catStartPos = 20;
+        let dogStartPos = 20;
+        
+        let catTargetPos = centerX - 150;
+        let dogTargetPos = centerX - 150;
+        
+        let catPos = catStartPos + (t * (catTargetPos - catStartPos) * 0.3); // Move 30% of the way
+        let dogPos = dogStartPos + (t * (dogTargetPos - dogStartPos) * 0.3);
+        
+        cat.style.left = `${catPos}px`;
+        dog.style.right = `${dogPos}px`;
+    }
+
+    /* Phase 3 — Human transitions to hug pose while pets continue (25–35%) */
+    if (p >= 25 && p <= 35) {
+        let hugT = easeInOutCubic((p - 25) / 10);
+        let moveT = easeOutCubic((p - 15) / 20); // Continue from phase 2
+
+        // Human crossfades to hug pose
+        humanStanding.style.opacity = 1 - hugT;
+        humanHug.style.opacity = hugT;
+        humanHug.style.transform = `translate(-50%, -50%) scale(${0.95 + (hugT * 0.05)})`;
+        
+        cat.style.opacity = 1;
+        dog.style.opacity = 1;
+
+        // Calculate center position
+        let centerX = window.innerWidth / 2;
+        
+        let catStartPos = 20;
+        let dogStartPos = 20;
+        
+        let catTargetPos = centerX - 150;
+        let dogTargetPos = centerX - 150;
+        
+        let catPos = catStartPos + (moveT * (catTargetPos - catStartPos) * 0.7);
+        let dogPos = dogStartPos + (moveT * (dogTargetPos - dogStartPos) * 0.7);
+        
+        cat.style.left = `${catPos}px`;
+        dog.style.right = `${dogPos}px`;
+    }
+
+    /* Phase 4 — Pets finish reaching human (35–55%) */
+    if (p >= 35 && p <= 55) {
+        let t = easeOutCubic((p - 15) / 40); // Smooth completion
+
+        humanStanding.style.opacity = 0;
+        humanHug.style.opacity = 1;
+        humanHug.style.transform = 'translate(-50%, -50%) scale(1)';
+        
+        cat.style.opacity = 1;
+        dog.style.opacity = 1;
+
+        // Calculate center position
+        let centerX = window.innerWidth / 2;
+        
+        let catStartPos = 20;
+        let dogStartPos = 20;
+        
+        let catTargetPos = centerX - 150;
+        let dogTargetPos = centerX - 150;
+        
+        let catPos = catStartPos + (t * (catTargetPos - catStartPos));
+        let dogPos = dogStartPos + (t * (dogTargetPos - dogStartPos));
+        
+        cat.style.left = `${catPos}px`;
+        dog.style.right = `${dogPos}px`;
+    }
+
+    /* Phase 4 — Moment they touch, logo starts fading in (55–70%) */
+    if (p >= 55 && p <= 70) {
+        let centerX = window.innerWidth / 2;
+        let logoT = (p - 55) / 15; // Logo fade progress
+        
+        humanHug.style.opacity = 1;
+        cat.style.opacity = 1;
+        dog.style.opacity = 1;
+        cat.style.left = `${centerX - 150}px`;
+        dog.style.right = `${centerX - 150}px`;
+        
+        // Logo begins to fade in at the exact moment they meet
+        logo.style.opacity = logoT * 0.5; // Start appearing gently
+        logo.style.transform = `translate(-50%, -50%) scale(${0.3 + (logoT * 0.2)})`;
+    }
+
+    /* Phase 5 — Everyone fades out as logo becomes prominent (70–88%) */
+    if (p >= 70 && p <= 88) {
+        let t = easeInOutCubic((p - 70) / 18);
+        let centerX = window.innerWidth / 2;
+
+        // Characters fade out
+        humanHug.style.opacity = 1 - t;
+        cat.style.opacity = 1 - t;
+        dog.style.opacity = 1 - t;
+        
+        cat.style.left = `${centerX - 150}px`;
+        dog.style.right = `${centerX - 150}px`;
+
+        // Logo continues to grow and become fully visible
+        logo.style.opacity = 0.5 + (t * 0.5);
+        logo.style.transform = `translate(-50%, -50%) scale(${0.5 + (t * 0.5)})`;
+    }
+
+    /* Phase 6 — Logo holds (88–92%) */
+    if (p >= 88 && p <= 92) {
+        humanHug.style.opacity = 0;
+        cat.style.opacity = 0;
+        dog.style.opacity = 0;
+        logo.style.opacity = 1;
+        logo.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+
+    /* Phase 7 — Welcome text appears (92–98%) */
+    if (p >= 92 && p <= 98) {
+        let t = easeOutQuart((p - 92) / 6);
+
+        logo.style.opacity = 1;
+        welcomeText.style.opacity = t;
+        welcomeText.style.transform = `translateX(-50%) translateY(${20 - (t * 20)}px)`;
+        
+        // Subtitle appears slightly after
+        if (p >= 94) {
+            let subT = Math.min((p - 94) / 4, 1);
+            subtitle.style.opacity = subT;
+        }
+    }
+
+    /* Phase 8 — Hold welcome screen (98–100%) */
+    if (p >= 98) {
+        logo.style.opacity = 1;
+        welcomeText.style.opacity = 1;
+        welcomeText.style.transform = 'translateX(-50%) translateY(0)';
+        subtitle.style.opacity = 1;
+
+        /* Auto redirect after reaching the end */
+        if (p >= 99.8 && !window.redirectScheduled) {
+            window.redirectScheduled = true;
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.8s ease';
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = "main.html";
+                }, 800);
+            }, 3000); // Wait 3 seconds before redirect
+        }
+    }
+}
+
+// Smooth scroll with requestAnimationFrame
+let ticking = false;
+window.addEventListener("scroll", () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            animate();
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+animate();
+</script>
+
+</body>
+</html>
