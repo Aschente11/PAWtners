@@ -7,6 +7,12 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
+    @font-face {
+        font-family: 'Chunko';
+        src: url(chunko-bold-demo.regular.otf);
+        font-style: normal;
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -34,35 +40,26 @@
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         scroll-behavior: smooth;
-        scrollbar-width: thin;
-        scrollbar-color: var(--orange) var(--cream);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
 
     .container::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .container::-webkit-scrollbar-track {
-        background: var(--cream);
-    }
-
-    .container::-webkit-scrollbar-thumb {
-        background: var(--orange);
-        border-radius: 10px;
+        display: none;
     }
 
     .section {
-        min-height: 100vh;
+        height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         scroll-snap-align: start;
+        scroll-snap-stop: always;
         position: relative;
         padding: 80px 60px;
         overflow: hidden;
     }
 
-    /* Alternating background colors */
     .section:nth-child(odd) {
         background: var(--cream);
     }
@@ -71,7 +68,6 @@
         background: var(--cream);
     }
 
-    /* Animated gradient orbs */
     .gradient-orb {
         position: absolute;
         border-radius: 50%;
@@ -173,13 +169,15 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        padding: 60px;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="%23043034" stroke-width="2.5"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8v-4a2 2 0 1 1 4 0"/><circle cx="9" cy="16" r="1" fill="%23043034"/><circle cx="15" cy="16" r="1" fill="%23043034"/></svg>'), pointer;
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         user-select: none;
+        border-radius: 50%;
+        overflow: hidden;
     }
 
     .pet-image:active {
@@ -193,11 +191,10 @@
     .pet-image img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
         filter: drop-shadow(0 10px 30px rgba(4, 48, 52, 0.2));
     }
 
-    /* Decorative elements */
     .decorative-circle {
         position: absolute;
         border: 3px solid;
@@ -229,8 +226,6 @@
         to { transform: rotate(360deg); }
     }
 
-    /* Love meter - redesigned */
-    /* Love meter - minimalist hearts only */
     .love-meter {
         position: absolute;
         top: -50px;
@@ -247,7 +242,6 @@
         transition: all 0.3s ease;
     }
 
-    /* Interactive items surrounding pets */
     .pet-items {
         position: absolute;
         width: 120%;
@@ -300,7 +294,6 @@
         }
     }
 
-    /* Strategic positioning - creating visual balance */
     .item:nth-child(1) {
         top: -10%;
         left: 50%;
@@ -372,7 +365,6 @@
         border: 3px solid rgba(145, 212, 213, 0.4);
     }
 
-    /* Happy animation - more refined */
     @keyframes happyBounce {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.08); }
@@ -382,7 +374,6 @@
         animation: happyBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Floating hearts - elegant rise */
     .floating-heart {
         position: absolute;
         font-size: 22px;
@@ -405,6 +396,21 @@
         }
     }
 
+    .instruction-tooltip {
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--dark-teal);
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 99;
+        animation: tooltipFade 5s ease forwards;
+        pointer-events: none;
+        opacity: 0.6;
+    }
 
     @keyframes tooltipFade {
         0%, 100% { opacity: 0; }
@@ -504,7 +510,6 @@
         box-shadow: 0 10px 25px rgba(4, 48, 52, 0.2);
     }
 
-    /* Buttons */
     .pet-actions {
         display: flex;
         gap: 20px;
@@ -576,7 +581,6 @@
         box-shadow: 0 15px 40px rgba(4, 48, 52, 0.3);
     }
 
-    /* Header section */
     .header-section {
         background: var(--cream);
         color: var(--dark-teal);
@@ -591,11 +595,11 @@
     }
 
     .header-section h1 {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Chunko', 'Playfair Display', serif;
         font-size: 96px;
         margin-bottom: 30px;
         letter-spacing: -2px;
-        font-weight: 800;
+        font-weight: bold;
         line-height: 1.1;
         opacity: 0;
         animation: titleFadeIn 1.5s ease forwards;
@@ -646,7 +650,6 @@
         50% { transform: translateX(-50%) translateY(-15px); }
     }
 
-    /* Modal */
     .modal {
         display: none;
         position: fixed;
@@ -723,7 +726,6 @@
         box-shadow: 0 20px 50px rgba(243, 110, 35, 0.5);
     }
 
-    /* Footer */
     .footer-section {
         background: var(--cream);
         color: var(--dark-teal);
@@ -733,7 +735,6 @@
         opacity: 0.8;
     }
 
-    /* Responsive */
     @media (max-width: 1024px) {
         .pet-card {
             grid-template-columns: 1fr;
@@ -858,7 +859,7 @@
                     <div class="decorative-circle circle-2"></div>
                     <div class="image-bg-circle"></div>
                     <div class="pet-image drop-zone" data-pet="max" data-happiness="0" onclick="petAnimal(this)">
-                        <img src="dog-03.svg" alt="Max">
+                        <img src="pets/sadDog.jpeg" alt="Max" class="pet-img">
                     </div>
                     <div class="pet-items">
                         <div class="item" draggable="true" data-item="food" data-pet-target="max">🍖</div>
@@ -888,11 +889,8 @@
                     <span class="trait">Loyal Guardian</span>
                 </div>
                 <div class="pet-actions">
-                    <button class="action-btn adopt-btn" onclick="openAdoptModal('Max')">
-                        <span>Adopt Max</span>
-                    </button>
-                    <button class="action-btn meet-btn" onclick="scheduleMeet('Max')">
-                        <span>Schedule Meet</span>
+                    <button class="action-btn meet-btn" onclick="scrollToEvent('max')">
+                        <span>Meet Max</span>
                     </button>
                 </div>
             </div>
@@ -910,7 +908,7 @@
                     <div class="decorative-circle circle-2"></div>
                     <div class="image-bg-circle"></div>
                     <div class="pet-image drop-zone" data-pet="luna" data-happiness="0" onclick="petAnimal(this)">
-                        <img src="cat-02.svg" alt="Luna">
+                        <img src="pets/sadcat.png" alt="Luna" class="pet-img">
                     </div>
                     <div class="pet-items">
                         <div class="item" draggable="true" data-item="food" data-pet-target="luna">🍖</div>
@@ -940,11 +938,8 @@
                     <span class="trait">Window Watcher</span>
                 </div>
                 <div class="pet-actions">
-                    <button class="action-btn adopt-btn" onclick="openAdoptModal('Luna')">
-                        <span>Adopt Luna</span>
-                    </button>
-                    <button class="action-btn meet-btn" onclick="scheduleMeet('Luna')">
-                        <span>Schedule Meet</span>
+                    <button class="action-btn meet-btn" onclick="scrollToEvent('luna')">
+                        <span>Meet Luna</span>
                     </button>
                 </div>
             </div>
@@ -962,7 +957,7 @@
                     <div class="decorative-circle circle-2"></div>
                     <div class="image-bg-circle"></div>
                     <div class="pet-image drop-zone" data-pet="buddy" data-happiness="0" onclick="petAnimal(this)">
-                        <img src="dog-03.svg" alt="Buddy">
+                        <img src="pets/sadDog2.jpeg" alt="Buddy" class="pet-img">
                     </div>
                     <div class="pet-items">
                         <div class="item" draggable="true" data-item="food" data-pet-target="buddy">🍖</div>
@@ -992,11 +987,8 @@
                     <span class="trait">Gentle Giant</span>
                 </div>
                 <div class="pet-actions">
-                    <button class="action-btn adopt-btn" onclick="openAdoptModal('Buddy')">
-                        <span>Adopt Buddy</span>
-                    </button>
-                    <button class="action-btn meet-btn" onclick="scheduleMeet('Buddy')">
-                        <span>Schedule Meet</span>
+                    <button class="action-btn meet-btn" onclick="scrollToEvent('buddy')">
+                        <span>Meet Buddy</span>
                     </button>
                 </div>
             </div>
@@ -1014,7 +1006,7 @@
                     <div class="decorative-circle circle-2"></div>
                     <div class="image-bg-circle"></div>
                     <div class="pet-image drop-zone" data-pet="whiskers" data-happiness="0" onclick="petAnimal(this)">
-                        <img src="cat-02.svg" alt="Whiskers">
+                        <img src="pets/sadcat2.jpg" alt="Whiskers" class="pet-img">
                     </div>
                     <div class="pet-items">
                         <div class="item" draggable="true" data-item="food" data-pet-target="whiskers">🍖</div>
@@ -1069,11 +1061,9 @@
 <script>
 // Pet interaction
 function petAnimal(element) {
-    // Happy bounce animation
     element.classList.add('happy');
     setTimeout(() => element.classList.remove('happy'), 600);
     
-    // Create floating hearts
     const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -1090,7 +1080,6 @@ function petAnimal(element) {
         setTimeout(() => heart.remove(), 2000);
     }
     
-    // Show reaction
     const reactions = ['😊', '🥰', '😸', '❤️'];
     const reaction = reactions[Math.floor(Math.random() * reactions.length)];
     
@@ -1116,7 +1105,6 @@ let draggedItem = null;
 let draggedElement = null;
 let draggedPetTarget = null;
 
-// Make items draggable
 document.querySelectorAll('.item').forEach(item => {
     item.addEventListener('dragstart', (e) => {
         draggedItem = e.target.dataset.item;
@@ -1133,7 +1121,6 @@ document.querySelectorAll('.item').forEach(item => {
         draggedElement = null;
     });
 
-    // Touch support for mobile
     item.addEventListener('touchstart', (e) => {
         e.preventDefault();
         draggedItem = e.target.dataset.item;
@@ -1161,7 +1148,6 @@ document.querySelectorAll('.item').forEach(item => {
             clone.style.top = touch.clientY - 35 + 'px';
         }
         
-        // Check if over the correct drop zone
         const dropZone = document.querySelector(`.drop-zone[data-pet="${draggedPetTarget}"]`);
         if (dropZone) {
             const rect = dropZone.getBoundingClientRect();
@@ -1197,11 +1183,9 @@ document.querySelectorAll('.item').forEach(item => {
     });
 });
 
-// Setup drop zones
 document.querySelectorAll('.drop-zone').forEach(zone => {
     zone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        // Only allow drop if it's the correct pet
         if (draggedPetTarget && zone.dataset.pet === draggedPetTarget) {
             e.dataTransfer.dropEffect = 'move';
             zone.classList.add('drag-over');
@@ -1215,7 +1199,6 @@ document.querySelectorAll('.drop-zone').forEach(zone => {
     zone.addEventListener('drop', (e) => {
         e.preventDefault();
         zone.classList.remove('drag-over');
-        // Only handle drop if it's the correct pet
         if (draggedPetTarget && zone.dataset.pet === draggedPetTarget) {
             handleDrop(zone, draggedItem, draggedElement);
         }
@@ -1230,25 +1213,23 @@ function handleDrop(zone, item, itemElement) {
     happiness++;
     zone.dataset.happiness = happiness;
     
-    // Make item disappear with animation
+    // Update pet image based on happiness level
+    updatePetImage(zone, petName, happiness);
+    
     itemElement.classList.add('used');
     setTimeout(() => {
         itemElement.style.visibility = 'hidden';
     }, 600);
     
-    // Update love meter (just hearts, no label)
     const loveMeter = zone.closest('.pet-image-container').querySelector('.hearts-display');
     const hearts = ['♡♡♡♡', '❤️♡♡♡', '❤️❤️♡♡', '❤️❤️❤️♡', '❤️❤️❤️❤️'];
     loveMeter.textContent = hearts[Math.min(happiness, 4)];
     
-    // Happy animation
     zone.classList.add('happy');
     setTimeout(() => zone.classList.remove('happy'), 600);
     
-    // Create floating hearts
     createFloatingHearts(zone);
     
-    // Simple success message
     const messages = {
         food: ['😋', '🍖', '😍'],
         water: ['💧', '💦', '💙'],
@@ -1259,6 +1240,38 @@ function handleDrop(zone, item, itemElement) {
     const itemMessages = messages[item];
     const message = itemMessages[Math.floor(Math.random() * itemMessages.length)];
     showItemMessage(zone, message);
+}
+
+// Function to update pet images based on happiness
+function updatePetImage(zone, petName, happiness) {
+    const petImg = zone.querySelector('.pet-img');
+    
+    // Define image mappings for each pet
+    const petImages = {
+        max: {
+            sad: 'pets/sadDog.jpeg',
+            happy: 'pets/happydog.jpg'
+        },
+        luna: {
+            sad: 'pets/sadcat.png',
+            happy: 'pets/happycat.png'
+        },
+        buddy: {
+            sad: 'pets/sadDog2.jpeg',
+            happy: 'pets/happydog2.jpg'
+        },
+        whiskers: {
+            sad: 'pets/sadcat2.jpg',
+            happy: 'pets/happycat2.jpg'
+        }
+    };
+    
+    // Switch to happy image when happiness reaches maximum (4)
+    if (happiness >= 4) {
+        petImg.src = petImages[petName].happy;
+    } else {
+        petImg.src = petImages[petName].sad;
+    }
 }
 
 function createFloatingHearts(zone) {
@@ -1311,70 +1324,6 @@ function showItemMessage(zone, message) {
     }, 1000);
 }
 
-function showCelebration(zone, petName) {
-    const celebration = document.createElement('div');
-    celebration.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 50px 60px;
-        border-radius: 30px;
-        box-shadow: 0 30px 80px rgba(4, 48, 52, 0.2);
-        z-index: 10000;
-        text-align: center;
-        animation: celebrationPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    `;
-    celebration.innerHTML = `
-        <div style="font-size: 64px; margin-bottom: 20px;">💝</div>
-        <h3 style="font-family: 'Playfair Display', serif; font-size: 36px; color: var(--dark-teal); margin-bottom: 15px; font-weight: 800;">
-            ${petName.charAt(0).toUpperCase() + petName.slice(1)} loves you
-        </h3>
-        <p style="font-size: 16px; color: var(--dark-teal); opacity: 0.7; margin-bottom: 30px;">
-            You've formed a special bond
-        </p>
-        <button onclick="this.parentElement.remove()" style="
-            background: linear-gradient(135deg, var(--orange) 0%, #ff8e52 100%);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            box-shadow: 0 10px 30px rgba(243, 110, 35, 0.3);
-            transition: all 0.3s ease;
-        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-            Continue
-        </button>
-    `;
-    
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes celebrationPop {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    document.body.appendChild(celebration);
-}
-
-// Add pulse animation style
-const pulseStyle = document.createElement('style');
-pulseStyle.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-`;
-document.head.appendChild(pulseStyle);
-
-// Rest of the original code
-// Intersection Observer for smooth animations
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1388,7 +1337,6 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.section').forEach(section => observer.observe(section));
 
-// Sound effects with visual feedback
 function playSound(type) {
     const sounds = {
         'woof': { emoji: '🐶', text: 'Woof woof!' },
@@ -1447,7 +1395,6 @@ function playSound(type) {
     }, 1200);
 }
 
-// Modal functions
 function openAdoptModal(petName) {
     const modal = document.getElementById('adoptModal');
     const modalText = document.getElementById('modalText');
@@ -1526,21 +1473,18 @@ function scheduleMeet(petName) {
     }, 3000);
 }
 
-// Close modal on outside click
 document.getElementById('adoptModal').addEventListener('click', (e) => {
     if (e.target.id === 'adoptModal') {
         closeModal();
     }
 });
 
-// Close modal on Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeModal();
     }
 });
 
-// Smooth scroll behavior
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
