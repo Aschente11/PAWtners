@@ -265,10 +265,26 @@
         cursor: grab;
         transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         user-select: none;
-        box-shadow: 0 6px 20px rgba(4, 48, 52, 0.08);
+        box-shadow: 0 10px 30px rgba(4, 48, 52, 0.2);
         pointer-events: all;
         opacity: 0;
-        animation: itemAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation: itemAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, itemFloat 3s ease-in-out infinite;
+        border: 3px solid rgba(243, 110, 35, 0.3);
+    }
+
+    @keyframes itemFloat {
+        0%, 100% { 
+            transform: translate(0, 0) rotate(0deg);
+        }
+        25% { 
+            transform: translate(15px, -15px) rotate(5deg);
+        }
+        50% { 
+            transform: translate(-10px, -25px) rotate(-5deg);
+        }
+        75% { 
+            transform: translate(-15px, 15px) rotate(3deg);
+        }
     }
 
     @keyframes itemAppear {
@@ -299,6 +315,7 @@
         left: 50%;
         transform: translateX(-50%);
         animation-delay: 0.2s;
+        animation-name: itemAppear, itemFloat1;
     }
 
     .item:nth-child(2) {
@@ -306,6 +323,7 @@
         top: 50%;
         transform: translateY(-50%);
         animation-delay: 0.4s;
+        animation-name: itemAppear, itemFloat2;
     }
 
     .item:nth-child(3) {
@@ -313,6 +331,7 @@
         left: 50%;
         transform: translateX(-50%);
         animation-delay: 0.6s;
+        animation-name: itemAppear, itemFloat3;
     }
 
     .item:nth-child(4) {
@@ -320,27 +339,105 @@
         top: 50%;
         transform: translateY(-50%);
         animation-delay: 0.8s;
+        animation-name: itemAppear, itemFloat4;
+    }
+
+    @keyframes itemFloat1 {
+        0%, 100% { 
+            top: -10%;
+            left: 50%;
+        }
+        25% { 
+            top: -12%;
+            left: 48%;
+        }
+        50% { 
+            top: -8%;
+            left: 52%;
+        }
+        75% { 
+            top: -11%;
+            left: 49%;
+        }
+    }
+
+    @keyframes itemFloat2 {
+        0%, 100% { 
+            right: -10%;
+            top: 50%;
+        }
+        25% { 
+            right: -12%;
+            top: 48%;
+        }
+        50% { 
+            right: -8%;
+            top: 52%;
+        }
+        75% { 
+            right: -11%;
+            top: 49%;
+        }
+    }
+
+    @keyframes itemFloat3 {
+        0%, 100% { 
+            bottom: -10%;
+            left: 50%;
+        }
+        25% { 
+            bottom: -8%;
+            left: 52%;
+        }
+        50% { 
+            bottom: -12%;
+            left: 48%;
+        }
+        75% { 
+            bottom: -9%;
+            left: 51%;
+        }
+    }
+
+    @keyframes itemFloat4 {
+        0%, 100% { 
+            left: -10%;
+            top: 50%;
+        }
+        25% { 
+            left: -8%;
+            top: 52%;
+        }
+        50% { 
+            left: -12%;
+            top: 48%;
+        }
+        75% { 
+            left: -9%;
+            top: 51%;
+        }
     }
 
     .item:hover:not(.dragging):not(.used) {
-        transform: scale(1.2);
-        box-shadow: 0 12px 32px rgba(4, 48, 52, 0.15);
+        transform: scale(1.3) rotate(10deg);
+        box-shadow: 0 15px 40px rgba(243, 110, 35, 0.4);
+        border-color: var(--orange);
     }
 
     .item:nth-child(1):hover:not(.dragging):not(.used) {
-        transform: translateX(-50%) scale(1.2);
+        transform: translateX(-50%) scale(1.3) rotate(10deg);
     }
 
     .item:nth-child(2):hover:not(.dragging):not(.used) {
-        transform: translateY(-50%) scale(1.2);
+        transform: translateY(-50%) scale(1.3) rotate(10deg);
     }
 
     .item:nth-child(3):hover:not(.dragging):not(.used) {
-        transform: translateX(-50%) scale(1.2);
+        transform: translateX(-50%) scale(1.3) rotate(10deg);
     }
 
     .item:nth-child(4):hover:not(.dragging):not(.used) {
-        transform: translateY(-50%) scale(1.2);
+        transform: translateY(-50%) scale(1.3) rotate(10deg);
     }
 
     .item.dragging {
@@ -514,6 +611,7 @@
         display: flex;
         gap: 20px;
         margin-top: 40px;
+        justify-content: center;
     }
 
     .action-btn {
@@ -735,6 +833,33 @@
         opacity: 0.8;
     }
 
+    .event-content {
+        max-width: 900px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    .event-logo {
+        width: 250px;
+        height: auto;
+        margin-bottom: 30px;
+        filter: drop-shadow(0 10px 30px rgba(4, 48, 52, 0.15));
+    }
+
+    .event-content .subtitle {
+        font-size: 24px;
+        line-height: 1.8;
+        opacity: 0.85;
+        margin-bottom: 20px;
+    }
+
+    .contact-info {
+        margin-top: 20px;
+        font-size: 18px;
+        opacity: 0.7;
+    }
+
     @media (max-width: 1024px) {
         .pet-card {
             grid-template-columns: 1fr;
@@ -813,6 +938,26 @@
             justify-content: center;
         }
 
+        .event-details-card {
+            padding: 30px 25px;
+        }
+
+        .event-icon {
+            font-size: 36px;
+        }
+
+        .event-text h3 {
+            font-size: 20px;
+        }
+
+        .event-text p {
+            font-size: 16px;
+        }
+
+        .event-content h1 {
+            font-size: 48px;
+        }
+
         .item {
             width: 60px;
             height: 60px;
@@ -876,17 +1021,14 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name" onclick="playSound('woof')">Max</h2>
                 <p class="pet-breed">Golden Retriever • 3 years old</p>
-                <p class="pet-story">"I dream of morning jogs and evening cuddles. Will you be my running buddy?"</p>
+                <p class="pet-story">"idk what to put here"</p>
                 <p class="pet-description">
-                    Max isn't just a dog—he's a ray of sunshine with a wagging tail. His days are filled with 
-                    boundless energy for adventures, but his favorite moment? When he can curl up beside you 
-                    after a long day. Rescued from a shelter, he's ready to give his whole heart to his forever family.
+                    *add pet story here*
                 </p>
                 <div class="pet-traits">
-                    <span class="trait">Fetch Champion</span>
-                    <span class="trait">Adventure Buddy</span>
-                    <span class="trait">Cuddle Expert</span>
-                    <span class="trait">Loyal Guardian</span>
+                    <span class="trait">trait 1</span>
+                    <span class="trait">trait 2</span>
+                    <span class="trait">trait 3</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('max')">
@@ -925,17 +1067,14 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name" onclick="playSound('meow')">Luna</h2>
                 <p class="pet-breed">Siamese Mix • 2 years old</p>
-                <p class="pet-story">"I may seem mysterious, but I have so much love to give the right human."</p>
+                <p class="pet-story">*idk what to put pa*</p>
                 <p class="pet-description">
-                    Luna is poetry in motion—elegant, graceful, and full of quiet affection. She's the perfect 
-                    companion for cozy evenings, gentle head bumps, and those soft purrs that melt your heart. 
-                    Found wandering alone, she's been waiting patiently for someone to call her own.
+                    *add pet story*
                 </p>
                 <div class="pet-traits">
-                    <span class="trait">Graceful Dancer</span>
-                    <span class="trait">Zen Master</span>
-                    <span class="trait">Gentle Soul</span>
-                    <span class="trait">Window Watcher</span>
+                    <span class="trait">trait 1</span>
+                    <span class="trait">trait 2</span>
+                    <span class="trait">trait 3</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('luna')">
@@ -974,17 +1113,14 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name" onclick="playSound('woof')">Buddy</h2>
                 <p class="pet-breed">Labrador Retriever • 4 years old</p>
-                <p class="pet-story">"I've got enough love for the whole family. Kids? Other pets? Bring them on!"</p>
+                <p class="pet-story">*idk what to put pa*</p>
                 <p class="pet-description">
-                    Buddy is the definition of a family dog—patient, loving, and endlessly entertaining. 
-                    Whether it's teaching him new tricks, splashing in the water, or being your shoulder to 
-                    lean on, he's always there with a wagging tail. His gentle nature makes him perfect for families.
+                    *add pet story*
                 </p>
                 <div class="pet-traits">
-                    <span class="trait">Family Perfect</span>
-                    <span class="trait">Water Lover</span>
-                    <span class="trait">Quick Learner</span>
-                    <span class="trait">Gentle Giant</span>
+                    <span class="trait">trait 1</span>
+                    <span class="trait">trait 2</span>
+                    <span class="trait">trait 3</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('buddy')">
@@ -1023,24 +1159,18 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name" onclick="playSound('meow')">Whiskers</h2>
                 <p class="pet-breed">Maine Coon • 5 years old</p>
-                <p class="pet-story">"Don't let my size fool you—I'm just a big softie looking for lap time."</p>
+                <p class="pet-story">*lorem ipsum*</p>
                 <p class="pet-description">
-                    Whiskers is majestic royalty wrapped in the softest fur imaginable. Despite his impressive 
-                    presence, he's incredibly gentle and loves being close to his humans. He'll follow you 
-                    room to room, always ready to keep you company with his soothing purrs.
+                    *idk idk idk*
                 </p>
                 <div class="pet-traits">
-                    <span class="trait">Majestic King</span>
-                    <span class="trait">Gentle Soul</span>
-                    <span class="trait">Entertaining</span>
-                    <span class="trait">Lap Warmer</span>
+                    <span class="trait">trait 1</span>
+                    <span class="trait">trait 2</span>
+                    <span class="trait">trait 3</span>
                 </div>
                 <div class="pet-actions">
-                    <button class="action-btn adopt-btn" onclick="openAdoptModal('Whiskers')">
-                        <span>Adopt Whiskers</span>
-                    </button>
-                    <button class="action-btn meet-btn" onclick="scheduleMeet('Whiskers')">
-                        <span>Schedule Meet</span>
+                    <button class="action-btn meet-btn" onclick="scrollToEvent('whiskers')">
+                        <span>Meet Whiskers</span>
                     </button>
                 </div>
             </div>
@@ -1048,12 +1178,16 @@
     </div>
 
     <!-- Footer -->
-    <div class="section footer-section">
+    <div class="section footer-section" id="event-details">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
-        <div class="header-content">
-            <h1>Your PAWtner<br>is Waiting</h1>
-            <p class="subtitle">Every click, every scroll brought you closer. Now take the final step—give them the home they deserve.</p>
+        <div class="event-content">
+            <img src="logo-heart.svg" alt="PAWtners" class="event-logo">
+            <p class="subtitle">Join the 5 days PAWtners event<br>held in Greenfield District</p>
+            
+            <div class="contact-info">
+                <p>More details coming soon</p>
+            </div>
         </div>
     </div>
 </div>
@@ -1079,25 +1213,6 @@ function petAnimal(element) {
         
         setTimeout(() => heart.remove(), 2000);
     }
-    
-    const reactions = ['😊', '🥰', '😸', '❤️'];
-    const reaction = reactions[Math.floor(Math.random() * reactions.length)];
-    
-    const msg = document.createElement('div');
-    msg.style.cssText = `
-        position: fixed;
-        left: ${centerX}px;
-        top: ${centerY - 60}px;
-        transform: translate(-50%, 0);
-        font-size: 36px;
-        z-index: 1000;
-        animation: messageFade 1.2s ease-out forwards;
-        pointer-events: none;
-    `;
-    msg.textContent = reaction;
-    document.body.appendChild(msg);
-    
-    setTimeout(() => msg.remove(), 1200);
 }
 
 // Drag and Drop System
@@ -1337,6 +1452,11 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.section').forEach(section => observer.observe(section));
 
+function scrollToEvent(petName) {
+    const eventSection = document.getElementById('event-details');
+    eventSection.scrollIntoView({ behavior: 'smooth' });
+}
+
 function playSound(type) {
     const sounds = {
         'woof': { emoji: '🐶', text: 'Woof woof!' },
@@ -1395,93 +1515,18 @@ function playSound(type) {
     }, 1200);
 }
 
-function openAdoptModal(petName) {
-    const modal = document.getElementById('adoptModal');
-    const modalText = document.getElementById('modalText');
-    modalText.textContent = `You've chosen to adopt ${petName}! This is the beginning of a beautiful friendship. Our adoption coordinator will reach out within 24 hours to start the process.`;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    const modal = document.getElementById('adoptModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-function scheduleMeet(petName) {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, var(--teal) 0%, #b4e5e6 100%);
-        color: var(--dark-teal);
-        padding: 40px 50px;
-        border-radius: 25px;
-        box-shadow: 0 30px 80px rgba(4, 48, 52, 0.3);
-        z-index: 9999;
-        font-size: 18px;
-        font-weight: 600;
-        max-width: 500px;
-        text-align: center;
-        animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        line-height: 1.6;
-    `;
-    notification.innerHTML = `
-        <div style="font-size: 48px; margin-bottom: 15px;">📅</div>
-        <strong>Great choice!</strong><br>
-        We're scheduling a meet & greet with ${petName}.<br>
-        You'll receive a confirmation email shortly!
-    `;
-    document.body.appendChild(notification);
-    
-    const slideStyle = document.createElement('style');
-    slideStyle.textContent = `
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) translateY(0);
-            }
-        }
-    `;
-    document.head.appendChild(slideStyle);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-        const slideOutStyle = document.createElement('style');
-        slideOutStyle.textContent = `
-            @keyframes slideOut {
-                to {
-                    opacity: 0;
-                    transform: translate(-50%, -50%) translateY(-50px);
-                }
-            }
-        `;
-        document.head.appendChild(slideOutStyle);
-        
-        setTimeout(() => {
-            notification.remove();
-            slideStyle.remove();
-            slideOutStyle.remove();
-        }, 500);
-    }, 3000);
-}
-
 document.getElementById('adoptModal').addEventListener('click', (e) => {
     if (e.target.id === 'adoptModal') {
-        closeModal();
+        e.target.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 });
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        closeModal();
+        const modal = document.getElementById('adoptModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 });
 
