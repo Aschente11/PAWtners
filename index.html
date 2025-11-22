@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pawtners Animation</title>
+<title>Pawtners</title>
 
 <style>
     * {
@@ -86,33 +86,6 @@
         filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
     }
 
-    /* Welcome text */
-    #welcomeText {
-        position: absolute;
-        left: 50%;
-        top: 78%;
-        transform: translateX(-50%) translateY(20px);
-        text-align: center;
-        opacity: 0;
-        color: #6b4423;
-        font-size: 36px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        white-space: nowrap;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-    }
-
-    #welcomeText .subtitle {
-        display: block;
-        font-size: 20px;
-        font-weight: normal;
-        margin-top: 12px;
-        letter-spacing: 4px;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-    }
-
     /* Scroll hint */
     .scroll-hint {
         position: fixed;
@@ -157,10 +130,6 @@
         <img id="humanStanding" src="human-standing-05.svg" alt="Human standing">
         <img id="humanHug" src="human-open-arms-04.svg" alt="Human with open arms">
         <img id="logo" src="logo-heart.svg" alt="Logo">
-        <div id="welcomeText">
-            Welcome to
-            <span class="subtitle">PAWtners Event Guide</span>
-        </div>
     </div>
 </div>
 
@@ -172,8 +141,6 @@ const dog = document.getElementById("dog");
 const humanStanding = document.getElementById("humanStanding");
 const humanHug = document.getElementById("humanHug");
 const logo = document.getElementById("logo");
-const welcomeText = document.getElementById("welcomeText");
-const subtitle = welcomeText.querySelector('.subtitle');
 const scrollHint = document.querySelector('.scroll-hint');
 
 // Smooth easing functions
@@ -335,27 +302,10 @@ function animate() {
         logo.style.transform = 'translate(-50%, -50%) scale(1)';
     }
 
-    /* Phase 7 — Welcome text appears (92–98%) */
-    if (p >= 92 && p <= 98) {
-        let t = easeOutQuart((p - 92) / 6);
-
+    /* Phase 7 — Hold logo (92–100%) */
+    if (p >= 92) {
         logo.style.opacity = 1;
-        welcomeText.style.opacity = t;
-        welcomeText.style.transform = `translateX(-50%) translateY(${20 - (t * 20)}px)`;
-        
-        // Subtitle appears slightly after
-        if (p >= 94) {
-            let subT = Math.min((p - 94) / 4, 1);
-            subtitle.style.opacity = subT;
-        }
-    }
-
-    /* Phase 8 — Hold welcome screen (98–100%) */
-    if (p >= 98) {
-        logo.style.opacity = 1;
-        welcomeText.style.opacity = 1;
-        welcomeText.style.transform = 'translateX(-50%) translateY(0)';
-        subtitle.style.opacity = 1;
+        logo.style.transform = 'translate(-50%, -50%) scale(1)';
 
         /* Auto redirect after reaching the end */
         if (p >= 99.8 && !window.redirectScheduled) {
