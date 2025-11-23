@@ -8,21 +8,13 @@
 </head>
 <body>
 
-<div class="modal" id="adoptModal">
-    <div class="modal-content">
-        <h2>🎉 Amazing!</h2>
-        <p id="modalText"></p>
-        <button class="close-modal" onclick="closeModal()">Close</button>
-    </div>
-</div>
-
 <div class="container">
     <!-- Header -->
     <div class="section header-section">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
         <div class="header-content">
-            <h1>Meet the Pets</h1>
+            <h1>Get to Know Our Rescues</h1>
         </div>
     </div>
 
@@ -55,16 +47,19 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name">Max</h2>
                 <p class="pet-breed">Golden Retriever • 3 years old</p>
-                <p class="pet-story">"idk what to put here"</p>
-                <p class="pet-description">*add pet story here*</p>
+                <p class="pet-story">"Every day, Max waits by the gate, hoping someone will choose him."</p>
+                <p class="pet-description">Found wandering alone after his elderly owner passed away, Max has been searching for a new family to love. Despite everything, his tail still wags when he sees a kind face.</p>
                 <div class="pet-traits">
-                    <span class="trait">trait 1</span>
-                    <span class="trait">trait 2</span>
-                    <span class="trait">trait 3</span>
+                    <span class="trait">Loyal Companion</span>
+                    <span class="trait">Great with Kids</span>
+                    <span class="trait">House Trained</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('max')">
                         <span>Meet Max</span>
+                    </button>
+                    <button class="action-btn adopt-btn" onclick="window.location.href='adopt.html'">
+                        <span>Adoption Requirements</span>
                     </button>
                 </div>
             </div>
@@ -101,16 +96,19 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name">Luna</h2>
                 <p class="pet-breed">Siamese Mix • 2 years old</p>
-                <p class="pet-story">*idk what to put pa*</p>
-                <p class="pet-description">*add pet story*</p>
+                <p class="pet-story">"Luna's soft purrs echo in an empty room, yearning for gentle hands."</p>
+                <p class="pet-description">Rescued from the streets after being abandoned as a kitten, Luna has learned to trust again. She may be shy at first, but give her time—she has so much love to offer.</p>
                 <div class="pet-traits">
-                    <span class="trait">trait 1</span>
-                    <span class="trait">trait 2</span>
-                    <span class="trait">trait 3</span>
+                    <span class="trait">Gentle & Calm</span>
+                    <span class="trait">Indoor Cat</span>
+                    <span class="trait">Affectionate</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('luna')">
                         <span>Meet Luna</span>
+                    </button>
+                    <button class="action-btn adopt-btn" onclick="window.location.href='adopt.html'">
+                        <span>Adoption Requirements</span>
                     </button>
                 </div>
             </div>
@@ -147,16 +145,19 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name">Buddy</h2>
                 <p class="pet-breed">Labrador Retriever • 4 years old</p>
-                <p class="pet-story">*idk what to put pa*</p>
-                <p class="pet-description">*add pet story*</p>
+                <p class="pet-story">"Buddy's eyes still light up with hope, even after being left behind."</p>
+                <p class="pet-description">Surrendered when his family moved abroad, Buddy doesn't understand why he was left at the shelter. He's patient, loving, and ready to be someone's best friend once more.</p>
                 <div class="pet-traits">
-                    <span class="trait">trait 1</span>
-                    <span class="trait">trait 2</span>
-                    <span class="trait">trait 3</span>
+                    <span class="trait">Playful & Active</span>
+                    <span class="trait">Loves Fetch</span>
+                    <span class="trait">Well-Behaved</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('buddy')">
                         <span>Meet Buddy</span>
+                    </button>
+                    <button class="action-btn adopt-btn" onclick="window.location.href='adopt.html'">
+                        <span>Adoption Requirements</span>
                     </button>
                 </div>
             </div>
@@ -193,16 +194,19 @@
                 <span class="pet-tag">Available for Adoption</span>
                 <h2 class="pet-name">Whiskers</h2>
                 <p class="pet-breed">Maine Coon • 5 years old</p>
-                <p class="pet-story">*lorem ipsum*</p>
-                <p class="pet-description">*idk idk idk*</p>
+                <p class="pet-story">"Whiskers waits patiently in his corner, dreaming of a warm lap."</p>
+                <p class="pet-description">Found injured and neglected, Whiskers has made a full recovery but still searches for his forever home. This senior cat has a lifetime of love left to give to the right person.</p>
                 <div class="pet-traits">
-                    <span class="trait">trait 1</span>
-                    <span class="trait">trait 2</span>
-                    <span class="trait">trait 3</span>
+                    <span class="trait">Mature & Calm</span>
+                    <span class="trait">Low Maintenance</span>
+                    <span class="trait">Cuddly</span>
                 </div>
                 <div class="pet-actions">
                     <button class="action-btn meet-btn" onclick="scrollToEvent('whiskers')">
                         <span>Meet Whiskers</span>
+                    </button>
+                    <button class="action-btn adopt-btn" onclick="window.location.href='adopt.html'">
+                        <span>Adoption Requirements</span>
                     </button>
                 </div>
             </div>
@@ -216,9 +220,29 @@
         <div class="gradient-orb orb-2"></div>
         <div class="event-content">
             <img src="logo-heart.svg" alt="PAWtners" class="event-logo">
-            <p class="subtitle">Join the 5 days PAWtners event<br>held in Greenfield District</p>
-            <div class="contact-info">
-                <p>More details coming soon</p>
+            <h2 class="event-title">5-Day Animal Welfare Event</h2>
+            <div class="event-details-grid">
+                <div class="event-detail">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">December 1-5, 2025</div>
+                </div>
+                <div class="event-detail">
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value">Greenfield District</div>
+                </div>
+                <div class="event-detail">
+                    <div class="detail-icon">🎟️</div>
+                    <div class="detail-label">Entry</div>
+                    <div class="detail-value">Free for All</div>
+                </div>
+            </div>
+            <p class="event-subtitle">Give a rescue pet a second chance at happiness</p>
+            <div class="event-actions">
+                <button class="event-btn primary-event-btn" onclick="window.location.href='adopt.html'">
+                    View Adoption Requirements
+                </button>
             </div>
         </div>
     </div>

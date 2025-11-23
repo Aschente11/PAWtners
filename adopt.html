@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Adopt - PAWtners</title>
+<title>Adoption Requirements - PAWtners</title>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
     @font-face {
         font-family: 'Chunko';
@@ -32,34 +32,47 @@
         background: var(--cream);
         color: var(--dark-teal);
         line-height: 1.6;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* Decorative Background Elements */
+    .bg-orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.15;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .bg-orb-1 {
+        width: 500px;
+        height: 500px;
+        background: var(--orange);
+        top: -150px;
+        right: -150px;
+    }
+
+    .bg-orb-2 {
+        width: 400px;
+        height: 400px;
+        background: var(--teal);
+        bottom: -100px;
+        left: -100px;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: 1000px;
         margin: 0 auto;
-        padding: 80px 40px;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 1;
     }
 
     .header {
         text-align: center;
         margin-bottom: 80px;
-        position: relative;
-    }
-
-    .header::before {
-        content: '🐾';
-        font-size: 80px;
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0.3;
-        animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateX(-50%) translateY(0); }
-        50% { transform: translateX(-50%) translateY(-20px); }
     }
 
     h1 {
@@ -68,14 +81,14 @@
         color: var(--dark-teal);
         margin-bottom: 20px;
         letter-spacing: -2px;
+        line-height: 1;
     }
 
     .subtitle {
-        font-size: 24px;
-        color: var(--teal);
+        font-size: 20px;
+        color: var(--dark-teal);
+        opacity: 0.6;
         font-weight: 400;
-        max-width: 700px;
-        margin: 0 auto;
     }
 
     .section {
@@ -84,181 +97,215 @@
 
     .section-title {
         font-family: 'Playfair Display', serif;
-        font-size: 48px;
-        color: var(--orange);
+        font-size: 40px;
+        color: var(--dark-teal);
         margin-bottom: 40px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .section-title::before {
-        content: '';
-        width: 60px;
-        height: 4px;
-        background: var(--orange);
-        border-radius: 2px;
-    }
-
-    /* Step-by-step process */
-    .steps-container {
-        display: grid;
-        gap: 30px;
-    }
-
-    .step {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(4, 48, 52, 0.1);
-        display: grid;
-        grid-template-columns: 80px 1fr;
-        gap: 30px;
-        align-items: start;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .step::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
-        height: 100%;
-        background: var(--orange);
-        transform: scaleY(0);
-        transition: transform 0.3s ease;
-    }
-
-    .step:hover {
-        transform: translateX(10px);
-        box-shadow: 0 15px 50px rgba(4, 48, 52, 0.15);
-    }
-
-    .step:hover::before {
-        transform: scaleY(1);
-    }
-
-    .step-number {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--orange), #ff8e52);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
         font-weight: 700;
-        box-shadow: 0 10px 30px rgba(243, 110, 35, 0.3);
-        flex-shrink: 0;
+        letter-spacing: -0.5px;
     }
 
-    .step-content h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 28px;
-        color: var(--dark-teal);
-        margin-bottom: 15px;
-    }
-
-    .step-content p {
-        font-size: 17px;
-        color: var(--dark-teal);
-        opacity: 0.85;
-        line-height: 1.8;
-    }
-
-    /* Requirements Grid */
+    /* Requirements Grid - Slicker Design */
     .requirements-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
     }
 
     .requirement-card {
         background: white;
-        padding: 35px;
+        padding: 40px 36px;
         border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(4, 48, 52, 0.1);
-        transition: all 0.3s ease;
-        text-align: center;
+        box-shadow: 0 4px 20px rgba(4, 48, 52, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(4, 48, 52, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .requirement-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--orange), var(--teal));
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
     }
 
     .requirement-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 50px rgba(4, 48, 52, 0.15);
+        box-shadow: 0 12px 40px rgba(4, 48, 52, 0.1);
+        border-color: rgba(4, 48, 52, 0.1);
+    }
+
+    .requirement-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .requirement-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
     }
 
     .requirement-icon {
-        font-size: 48px;
-        margin-bottom: 20px;
-        display: block;
+        font-size: 36px;
+        flex-shrink: 0;
+        line-height: 1;
     }
 
-    .requirement-card h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 22px;
+    .requirement-text h3 {
+        font-size: 18px;
         color: var(--dark-teal);
-        margin-bottom: 15px;
+        margin-bottom: 8px;
+        font-weight: 600;
     }
 
-    .requirement-card p {
+    .requirement-text p {
+        font-size: 14px;
+        color: var(--dark-teal);
+        opacity: 0.65;
+        line-height: 1.6;
+    }
+
+    /* Important Notes Section */
+    .notes-grid {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 40px;
+    }
+
+    .note-card {
+        background: linear-gradient(135deg, rgba(243, 110, 35, 0.08), rgba(145, 212, 213, 0.08));
+        padding: 24px 28px;
+        border-radius: 16px;
+        border-left: 4px solid var(--orange);
+        display: flex;
+        align-items: start;
+        gap: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .note-card:hover {
+        transform: translateX(4px);
+        background: linear-gradient(135deg, rgba(243, 110, 35, 0.12), rgba(145, 212, 213, 0.12));
+    }
+
+    .note-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+        line-height: 1;
+    }
+
+    .note-text {
+        flex: 1;
+    }
+
+    .note-text h4 {
         font-size: 16px;
         color: var(--dark-teal);
-        opacity: 0.85;
+        margin-bottom: 6px;
+        font-weight: 600;
     }
 
-    /* Checklist */
+    .note-text p {
+        font-size: 14px;
+        color: var(--dark-teal);
+        opacity: 0.75;
+        line-height: 1.7;
+    }
+
+    /* Checklist - Sleeker Design */
     .checklist {
         background: white;
-        padding: 40px;
+        padding: 48px;
         border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(4, 48, 52, 0.1);
+        box-shadow: 0 4px 20px rgba(4, 48, 52, 0.06);
+        border: 1px solid rgba(4, 48, 52, 0.05);
+    }
+
+    .checklist-header {
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(4, 48, 52, 0.08);
+    }
+
+    .checklist-header h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        color: var(--dark-teal);
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .checklist-header p {
+        font-size: 14px;
+        color: var(--dark-teal);
+        opacity: 0.6;
     }
 
     .checklist-items {
         display: grid;
-        gap: 20px;
+        gap: 12px;
     }
 
     .checklist-item {
         display: flex;
         align-items: start;
-        gap: 20px;
+        gap: 18px;
         padding: 20px;
         border-radius: 12px;
         transition: all 0.3s ease;
         cursor: pointer;
+        position: relative;
+    }
+
+    .checklist-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--dark-teal);
+        border-radius: 0 2px 2px 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     .checklist-item:hover {
-        background: var(--cream);
+        background: rgba(4, 48, 52, 0.03);
+    }
+
+    .checklist-item:hover::before {
+        opacity: 1;
     }
 
     .checkbox {
-        width: 28px;
-        height: 28px;
-        border: 3px solid var(--teal);
-        border-radius: 8px;
+        width: 22px;
+        height: 22px;
+        border: 2px solid rgba(4, 48, 52, 0.2);
+        border-radius: 6px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
-        margin-top: 2px;
+        margin-top: 1px;
     }
 
     .checklist-item:hover .checkbox {
-        border-color: var(--orange);
-        background: var(--orange);
+        border-color: var(--dark-teal);
+        background: var(--dark-teal);
     }
 
     .checkbox::after {
         content: '✓';
         color: white;
-        font-size: 18px;
+        font-size: 13px;
         font-weight: bold;
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -268,299 +315,263 @@
         opacity: 1;
     }
 
-    .checklist-text {
-        flex: 1;
-    }
-
     .checklist-text h4 {
-        font-size: 18px;
+        font-size: 15px;
         color: var(--dark-teal);
-        margin-bottom: 5px;
+        margin-bottom: 4px;
         font-weight: 600;
     }
 
     .checklist-text p {
-        font-size: 15px;
+        font-size: 13px;
         color: var(--dark-teal);
-        opacity: 0.75;
+        opacity: 0.65;
+        line-height: 1.6;
     }
 
-    /* Tips Section */
-    .tips-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-    }
-
-    .tip-card {
-        background: linear-gradient(135deg, var(--teal), #7bc4c5);
-        padding: 35px;
-        border-radius: 20px;
-        color: white;
-        box-shadow: 0 10px 40px rgba(145, 212, 213, 0.3);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .tip-card::before {
-        content: '💡';
-        position: absolute;
-        font-size: 120px;
-        top: -20px;
-        right: -20px;
-        opacity: 0.2;
-    }
-
-    .tip-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 50px rgba(145, 212, 213, 0.4);
-    }
-
-    .tip-card h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 24px;
-        margin-bottom: 15px;
-        position: relative;
-    }
-
-    .tip-card p {
-        font-size: 16px;
-        line-height: 1.7;
-        opacity: 0.95;
-        position: relative;
-    }
-
-    /* CTA Section */
-    .cta-section {
+    /* Fee Info Box */
+    .fee-box {
         background: linear-gradient(135deg, var(--orange), #ff8e52);
-        padding: 60px;
-        border-radius: 30px;
-        text-align: center;
+        padding: 32px 36px;
+        border-radius: 16px;
         color: white;
-        box-shadow: 0 20px 60px rgba(243, 110, 35, 0.3);
-        margin-top: 80px;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(243, 110, 35, 0.25);
     }
 
-    .cta-section h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 48px;
-        margin-bottom: 20px;
-    }
-
-    .cta-section p {
-        font-size: 20px;
-        margin-bottom: 35px;
-        opacity: 0.95;
-    }
-
-    .cta-button {
-        display: inline-block;
-        padding: 20px 50px;
-        background: white;
-        color: var(--orange);
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 700;
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        background: var(--dark-teal);
-        color: white;
-    }
-
-    /* Alert Box */
-    .alert-box {
-        background: #fff3cd;
-        border-left: 5px solid var(--yellow);
-        padding: 25px 30px;
-        border-radius: 12px;
-        margin: 30px 0;
+    .fee-content {
         display: flex;
-        align-items: start;
+        align-items: center;
         gap: 20px;
     }
 
-    .alert-icon {
-        font-size: 32px;
+    .fee-icon {
+        font-size: 48px;
         flex-shrink: 0;
     }
 
-    .alert-content p {
-        color: #856404;
-        font-size: 16px;
-        margin: 0;
+    .fee-text h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .fee-text p {
+        font-size: 14px;
+        opacity: 0.95;
+        line-height: 1.6;
+    }
+
+    /* Back Button */
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: transparent;
+        color: var(--dark-teal);
+        border: 1.5px solid var(--dark-teal);
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.3s ease;
+        margin-top: 60px;
+    }
+
+    .back-button:hover {
+        background: var(--dark-teal);
+        color: white;
+        transform: translateY(-2px);
     }
 
     @media (max-width: 768px) {
         .container {
-            padding: 60px 20px;
+            padding: 80px 30px;
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 52px;
         }
 
         .section-title {
-            font-size: 36px;
+            font-size: 32px;
         }
 
-        .step {
-            grid-template-columns: 60px 1fr;
-            padding: 30px 25px;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-        }
-
-        .step-content h3 {
-            font-size: 22px;
-        }
-
-        .requirements-grid,
-        .tips-grid {
+        .requirements-grid {
             grid-template-columns: 1fr;
+            gap: 20px;
         }
 
-        .cta-section {
-            padding: 40px 30px;
+        .checklist {
+            padding: 36px 28px;
         }
 
-        .cta-section h2 {
-            font-size: 36px;
+        .fee-content {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 60px 24px;
+        }
+
+        h1 {
+            font-size: 44px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 32px;
+        }
+
+        .requirement-card {
+            padding: 32px 28px;
+        }
+
+        .requirement-content {
+            gap: 16px;
+        }
+
+        .requirement-icon {
+            font-size: 32px;
+        }
+
+        .checklist {
+            padding: 32px 24px;
+        }
+
+        .checklist-header h3 {
+            font-size: 20px;
+        }
+
+        .fee-box {
+            padding: 28px;
+        }
+
+        .fee-icon {
+            font-size: 40px;
         }
     }
 </style>
 </head>
 <body>
 
+<!-- Background Decorative Elements -->
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
 <div class="container">
     <!-- Header -->
     <div class="header">
-        <h1>How to Adopt</h1>
-        <p class="subtitle">Follow these steps to give a rescue animal their forever home.</p>
-    </div>
-
-    <!-- Step-by-Step Process -->
-    <div class="section">
-        <h2 class="section-title">The Adoption Process</h2>
-        
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Browse Available Pets</h3>
-                    <p>Visit our "Meet the Pets" page or come to the PAWtners event at Greenfield District. Spend time with different animals to find the one that matches your lifestyle and personality. Our staff will help you understand each pet's unique needs and temperament.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Submit Application</h3>
-                    <p>Fill out an adoption application form at the event or online. Be honest about your living situation, experience with pets, and daily routine. This helps us ensure the best match between you and your future companion.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Interview & Home Check</h3>
-                    <p>Meet with our adoption counselors for a brief interview. In some cases, we may conduct a home visit to ensure your space is safe and suitable for the pet you're interested in. This is for the safety and happiness of both you and the animal.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Meet & Greet</h3>
-                    <p>Spend quality time with your potential new pet. If you have other pets or family members, bring them along to ensure everyone gets along. This interaction helps confirm if it's the right match.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">5</div>
-                <div class="step-content">
-                    <h3>Complete Adoption</h3>
-                    <p>Once approved, sign the adoption contract and pay the adoption fee (covers vaccinations, spay/neuter, and medical care). Receive your adoption kit with medical records, care instructions, and ongoing support resources.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">6</div>
-                <div class="step-content">
-                    <h3>Take Your Pet Home</h3>
-                    <p>Congratulations! Bring your new family member home. We'll provide you with starter supplies and schedule a follow-up check-in. Our team remains available for any questions or support you need during the transition.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="alert-box">
-            <span class="alert-icon">⏱️</span>
-            <div class="alert-content">
-                <p><strong>Processing Time:</strong> The entire adoption process typically takes 1-3 days depending on the completeness of your application and availability for home checks. Same-day adoptions may be possible during the PAWtners event for pre-approved applicants.</p>
-            </div>
-        </div>
+        <h1>Adoption Requirements</h1>
+        <p class="subtitle">Everything you need to bring a rescue pet home</p>
     </div>
 
     <!-- Requirements -->
     <div class="section">
-        <h2 class="section-title">Adopter Requirements</h2>
+        <h2 class="section-title">Basic Requirements</h2>
         
         <div class="requirements-grid">
             <div class="requirement-card">
-                <span class="requirement-icon">🎂</span>
-                <h3>Age Requirement</h3>
-                <p>Must be 21 years or older with valid government-issued ID</p>
+                <div class="requirement-content">
+                    <span class="requirement-icon">🎂</span>
+                    <div class="requirement-text">
+                        <h3>Age 21 or Older</h3>
+                        <p>Must be of legal age with valid government-issued identification</p>
+                    </div>
+                </div>
             </div>
 
             <div class="requirement-card">
-                <span class="requirement-icon">🏠</span>
-                <h3>Stable Housing</h3>
-                <p>Proof of residence with landlord approval if renting (pet policy)</p>
+                <div class="requirement-content">
+                    <span class="requirement-icon">🏠</span>
+                    <div class="requirement-text">
+                        <h3>Stable Housing</h3>
+                        <p>Proof of residence with landlord's written approval if renting</p>
+                    </div>
+                </div>
             </div>
 
             <div class="requirement-card">
-                <span class="requirement-icon">💰</span>
-                <h3>Financial Stability</h3>
-                <p>Ability to cover pet expenses including food, medical care, and emergencies</p>
+                <div class="requirement-content">
+                    <span class="requirement-icon">💰</span>
+                    <div class="requirement-text">
+                        <h3>Financial Stability</h3>
+                        <p>Ability to cover food, medical care, grooming, and emergency expenses</p>
+                    </div>
+                </div>
             </div>
 
             <div class="requirement-card">
-                <span class="requirement-icon">⏰</span>
-                <h3>Time & Commitment</h3>
-                <p>Adequate time for exercise, training, socialization, and companionship</p>
+                <div class="requirement-content">
+                    <span class="requirement-icon">⏰</span>
+                    <div class="requirement-text">
+                        <h3>Time & Commitment</h3>
+                        <p>Adequate time daily for exercise, training, and quality companionship</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Important Notes -->
+    <div class="section">
+        <h2 class="section-title">Important Reminders</h2>
+        
+        <div class="notes-grid">
+            <div class="note-card">
+                <span class="note-icon">⚠️</span>
+                <div class="note-text">
+                    <h4>Adoption is a Lifetime Commitment</h4>
+                    <p>Dogs can live 10-15 years, cats 12-18 years. Ensure you're ready for this long-term responsibility before adopting.</p>
+                </div>
             </div>
 
-            <div class="requirement-card">
-                <span class="requirement-icon">👨‍👩‍👧‍👦</span>
-                <h3>Family Agreement</h3>
-                <p>All household members must agree to the adoption</p>
+            <div class="note-card">
+                <span class="note-icon">🏥</span>
+                <div class="note-text">
+                    <h4>Budget for Veterinary Care</h4>
+                    <p>Annual checkups cost ₱2,000-5,000. Emergency treatments can exceed ₱10,000. Always have a pet emergency fund ready.</p>
+                </div>
             </div>
 
-            <div class="requirement-card">
-                <span class="requirement-icon">📋</span>
-                <h3>Veterinary Plan</h3>
-                <p>Commitment to regular vet visits, vaccinations, and preventive care</p>
+            <div class="note-card">
+                <span class="note-icon">⏱️</span>
+                <div class="note-text">
+                    <h4>The 3-3-3 Rule of Adjustment</h4>
+                    <p>3 days to decompress, 3 weeks to learn your routine, 3 months to fully settle in. Patience is key during this transition period.</p>
+                </div>
+            </div>
+
+            <div class="note-card">
+                <span class="note-icon">🚫</span>
+                <div class="note-text">
+                    <h4>No Returns or Exchanges</h4>
+                    <p>Adoption is permanent. We'll support you through challenges, but please be certain before making your decision.</p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- What to Bring -->
     <div class="section">
-        <h2 class="section-title">What to Bring to the Event</h2>
+        <h2 class="section-title">What to Bring</h2>
         
         <div class="checklist">
+            <div class="checklist-header">
+                <h3>Adoption Day Checklist</h3>
+                <p>Prepare these documents and items before visiting the event</p>
+            </div>
+            
             <div class="checklist-items">
                 <div class="checklist-item">
                     <div class="checkbox"></div>
@@ -582,96 +593,41 @@
                     <div class="checkbox"></div>
                     <div class="checklist-text">
                         <h4>Landlord Approval Letter</h4>
-                        <p>If renting: written permission to keep pets with signature</p>
+                        <p>If renting: written permission with signature and contact details</p>
                     </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="checkbox"></div>
                     <div class="checklist-text">
-                        <h4>Veterinary Records</h4>
-                        <p>If you have other pets: current vaccination and health records</p>
+                        <h4>Pet Carrier or Leash & Collar</h4>
+                        <p>Essential for safely transporting your new companion home</p>
                     </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="checkbox"></div>
                     <div class="checklist-text">
-                        <h4>Adoption Fee (₱1,500 - ₱3,000)</h4>
-                        <p>Cash or card accepted. Fee covers spay/neuter, vaccines, and health check</p>
+                        <h4>All Family Members Present</h4>
+                        <p>Everyone who will interact with the pet should attend the meet & greet</p>
                     </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="checkbox"></div>
                     <div class="checklist-text">
-                        <h4>Pet Carrier or Leash</h4>
-                        <p>For safely transporting your new companion home</p>
-                    </div>
-                </div>
-
-                <div class="checklist-item">
-                    <div class="checkbox"></div>
-                    <div class="checklist-text">
-                        <h4>Photos of Your Home</h4>
-                        <p>Indoor and outdoor spaces where the pet will live (optional but helpful)</p>
-                    </div>
-                </div>
-
-                <div class="checklist-item">
-                    <div class="checkbox"></div>
-                    <div class="checklist-text">
-                        <h4>Family Members</h4>
-                        <p>Bring everyone who will interact with the pet for meet & greet</p>
+                        <h4>Photos of Your Home (Optional)</h4>
+                        <p>Indoor and outdoor spaces to help us ensure a good match</p>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <!-- Preparation Tips -->
-    <div class="section">
-        <h2 class="section-title">Preparation Tips</h2>
-        
-        <div class="tips-grid">
-            <div class="tip-card">
-                <h3>Before You Adopt</h3>
-                <p>Research different breeds and their needs. Consider your lifestyle, work schedule, and activity level. Discuss responsibilities with family members and ensure everyone is ready for the commitment.</p>
-            </div>
-
-            <div class="tip-card">
-                <h3>Pet-Proof Your Home</h3>
-                <p>Remove toxic plants, secure electrical cords, store chemicals safely, and create a designated space for your pet with food bowls, bed, and toys. Install baby gates if needed.</p>
-            </div>
-
-            <div class="tip-card">
-                <h3>Budget Planning</h3>
-                <p>Plan for initial costs (supplies, carrier, bed) and ongoing expenses (food, vet care, grooming, training). Set aside an emergency fund for unexpected medical needs.</p>
-            </div>
-
-            <div class="tip-card">
-                <h3>Find a Veterinarian</h3>
-                <p>Research and choose a trusted vet clinic before bringing your pet home. Schedule a wellness check-up within the first week of adoption for a smooth health transition.</p>
-            </div>
-
-            <div class="tip-card">
-                <h3>Stock Up on Essentials</h3>
-                <p>Food and water bowls, quality pet food, collar and ID tag, leash, litter box (for cats), toys, grooming supplies, and a comfortable bed or crate.</p>
-            </div>
-
-            <div class="tip-card">
-                <h3>Patience & Training</h3>
-                <p>Allow 3-3-3 rule: 3 days to decompress, 3 weeks to learn routine, 3 months to feel at home. Consider professional training classes for best results and bonding.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta-section">
-        <h2>Ready to Change a Life?</h2>
-        <p>Join us at the PAWtners event and meet your future best friend!</p>
-        <a href="#" class="cta-button">Meet the Pets</a>
-    </div>
+    <a href="main.html" class="back-button">
+        ← Back to Pets
+    </a>
 </div>
 
 </body>

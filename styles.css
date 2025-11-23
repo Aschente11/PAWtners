@@ -54,8 +54,6 @@ body {
     overflow: hidden;
 }
 
-/* Add this after the .section styles */
-
 .section-wrapper {
     width: 100%;
     max-width: 1400px;
@@ -65,7 +63,6 @@ body {
     justify-content: center;
     min-height: 100%;
 }
-
 
 .section:nth-child(odd) {
     background: var(--cream);
@@ -123,7 +120,6 @@ body {
     margin: auto;
 }
 
-
 .pet-card.visible {
     opacity: 1;
     transform: translateY(0);
@@ -173,11 +169,10 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    border-radius: 50%;  /* <--- add this */
-    display: block;       /* avoids inline spacing issues */
+    border-radius: 50%;
+    display: block;
     margin: 0 auto;
 }
-
 
 .decorative-circle {
     position: absolute;
@@ -411,23 +406,24 @@ body {
 .pet-traits {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     margin: 30px 0;
 }
 
 .trait {
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 30px;
-    font-size: 14px;
+    padding: 10px 20px;
+    background: transparent;
+    border-radius: 50px;
+    font-size: 13px;
     color: var(--dark-teal);
-    border: 2px solid transparent;
+    border: 1.5px solid rgba(4, 48, 52, 0.2);
     transition: all 0.3s ease;
     cursor: pointer;
     font-weight: 500;
 }
 
 .trait:active {
+    border-color: var(--dark-teal);
     background: var(--dark-teal);
     color: white;
     transform: scale(0.95);
@@ -441,30 +437,42 @@ body {
 }
 
 .action-btn {
-    padding: 18px 40px;
-    font-size: 16px;
+    padding: 16px 36px;
+    font-size: 14px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
 .meet-btn {
-    background: white;
+    background: transparent;
     color: var(--dark-teal);
-    border: 2px solid var(--dark-teal);
+    border: 1.5px solid var(--dark-teal);
 }
 
 .meet-btn:active {
     background: var(--dark-teal);
     color: white;
+    transform: scale(0.97);
+}
+
+.adopt-btn {
+    background: var(--dark-teal);
+    color: white;
+    border: 1.5px solid var(--dark-teal);
+}
+
+.adopt-btn:active {
+    background: var(--orange);
+    border-color: var(--orange);
     transform: scale(0.97);
 }
 
@@ -581,16 +589,88 @@ body {
 }
 
 .event-logo {
-    width: 250px;
+    width: 180px;
     height: auto;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    opacity: 0.9;
 }
 
-.event-content .subtitle {
-    font-size: 24px;
-    line-height: 1.8;
-    opacity: 0.85;
-    margin-bottom: 20px;
+.event-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--dark-teal);
+    margin-bottom: 50px;
+    letter-spacing: -0.5px;
+}
+
+.event-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 50px 0;
+}
+
+.event-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.detail-icon {
+    font-size: 32px;
+    margin-bottom: 4px;
+}
+
+.detail-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: var(--dark-teal);
+    opacity: 0.5;
+}
+
+.detail-value {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark-teal);
+}
+
+.event-subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0.7;
+    margin: 40px 0;
+    font-weight: 400;
+}
+
+.event-actions {
+    margin-top: 50px;
+}
+
+.event-btn {
+    padding: 18px 48px;
+    font-size: 15px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.primary-event-btn {
+    background: var(--dark-teal);
+    color: white;
+}
+
+.primary-event-btn:active {
+    transform: scale(0.97);
+    background: var(--orange);
 }
 
 .contact-info {
@@ -750,13 +830,37 @@ body {
     }
 
     .event-logo {
-        width: 200px;
-        margin-bottom: 24px;
+        width: 150px;
+        margin-bottom: 32px;
     }
 
-    .event-content .subtitle {
-        font-size: 20px;
-        line-height: 1.6;
+    .event-title {
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    .event-details-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin: 40px 0;
+    }
+
+    .detail-icon {
+        font-size: 28px;
+    }
+
+    .detail-value {
+        font-size: 16px;
+    }
+
+    .event-subtitle {
+        font-size: 18px;
+        margin: 32px 0;
+    }
+
+    .event-btn {
+        padding: 16px 40px;
+        font-size: 13px;
     }
 
     .contact-info {
@@ -860,11 +964,36 @@ body {
     }
 
     .event-logo {
-        width: 160px;
+        width: 130px;
     }
 
-    .event-content .subtitle {
-        font-size: 18px;
+    .event-title {
+        font-size: 32px;
+    }
+
+    .event-details-grid {
+        gap: 28px;
+    }
+
+    .detail-icon {
+        font-size: 26px;
+    }
+
+    .detail-label {
+        font-size: 11px;
+    }
+
+    .detail-value {
+        font-size: 15px;
+    }
+
+    .event-subtitle {
+        font-size: 16px;
+    }
+
+    .event-btn {
+        padding: 14px 36px;
+        font-size: 12px;
     }
 
     .contact-info {
