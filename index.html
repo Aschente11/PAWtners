@@ -12,11 +12,26 @@
         box-sizing: border-box;
     }
 
+    html {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    html::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
     body {
         height: 500vh;
         background: linear-gradient(to bottom, #f0e2d4 0%, #fef5eb 50%, #f0e2d4 100%);
         overflow-x: hidden;
         font-family: 'Arial', sans-serif;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    body::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
     }
 
     .stage {
@@ -118,6 +133,81 @@
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-10px); }
     }
+
+    /* Tablet Responsive */
+    @media (max-width: 1024px) {
+        #humanStanding,
+        #humanHug {
+            width: 200px;
+        }
+
+        #cat,
+        #dog {
+            width: 90px;
+        }
+
+        #logo {
+            width: 250px;
+        }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        body {
+            height: 400vh; /* Shorter scroll on mobile */
+        }
+
+        #humanStanding,
+        #humanHug {
+            width: 160px;
+        }
+
+        #cat,
+        #dog {
+            width: 75px;
+            left: 10px;
+            right: 10px;
+        }
+
+        #logo {
+            width: 200px;
+        }
+
+        .scroll-hint {
+            font-size: 12px;
+            bottom: 15px;
+        }
+
+        .scroll-hint::after {
+            font-size: 20px;
+        }
+    }
+
+    /* Small Mobile */
+    @media (max-width: 480px) {
+        body {
+            height: 350vh; /* Even shorter for small screens */
+        }
+
+        #humanStanding,
+        #humanHug {
+            width: 130px;
+        }
+
+        #cat,
+        #dog {
+            width: 60px;
+        }
+
+        #logo {
+            width: 160px;
+        }
+
+        .scroll-hint {
+            font-size: 11px;
+            bottom: 20px;
+        }
+    }
 </style>
 </head>
 
@@ -142,6 +232,10 @@ const humanStanding = document.getElementById("humanStanding");
 const humanHug = document.getElementById("humanHug");
 const logo = document.getElementById("logo");
 const scrollHint = document.querySelector('.scroll-hint');
+
+// Detect mobile for adjusted animations
+const isMobile = window.innerWidth <= 768;
+const isSmallMobile = window.innerWidth <= 480;
 
 // Smooth easing functions
 function easeOutQuart(t) {
@@ -168,6 +262,14 @@ function animate() {
         scrollHint.style.opacity = '1';
     }
 
+    // Calculate center position
+    const centerX = window.innerWidth / 2;
+    
+    // Adjust distances based on screen size
+    let petOffset = 150;
+    if (isMobile) petOffset = 100;
+    if (isSmallMobile) petOffset = 75;
+
     /* Phase 1 — Human appears with gentle fade (0–15%) */
     if (p <= 15) {
         let t = easeInOutCubic(p / 15);
@@ -186,17 +288,14 @@ function animate() {
         cat.style.opacity = fadeT;
         dog.style.opacity = fadeT;
 
-        // Calculate center position
-        let centerX = window.innerWidth / 2;
-        
         // Pets start at screen edges and begin moving
-        let catStartPos = 20;
-        let dogStartPos = 20;
+        let catStartPos = isMobile ? 10 : 20;
+        let dogStartPos = isMobile ? 10 : 20;
         
-        let catTargetPos = centerX - 150;
-        let dogTargetPos = centerX - 150;
+        let catTargetPos = centerX - petOffset;
+        let dogTargetPos = centerX - petOffset;
         
-        let catPos = catStartPos + (t * (catTargetPos - catStartPos) * 0.3); // Move 30% of the way
+        let catPos = catStartPos + (t * (catTargetPos - catStartPos) * 0.3);
         let dogPos = dogStartPos + (t * (dogTargetPos - dogStartPos) * 0.3);
         
         cat.style.left = `${catPos}px`;
@@ -206,7 +305,7 @@ function animate() {
     /* Phase 3 — Human transitions to hug pose while pets continue (25–35%) */
     if (p >= 25 && p <= 35) {
         let hugT = easeInOutCubic((p - 25) / 10);
-        let moveT = easeOutCubic((p - 15) / 20); // Continue from phase 2
+        let moveT = easeOutCubic((p - 15) / 20);
 
         // Human crossfades to hug pose
         humanStanding.style.opacity = 1 - hugT;
@@ -216,14 +315,11 @@ function animate() {
         cat.style.opacity = 1;
         dog.style.opacity = 1;
 
-        // Calculate center position
-        let centerX = window.innerWidth / 2;
+        let catStartPos = isMobile ? 10 : 20;
+        let dogStartPos = isMobile ? 10 : 20;
         
-        let catStartPos = 20;
-        let dogStartPos = 20;
-        
-        let catTargetPos = centerX - 150;
-        let dogTargetPos = centerX - 150;
+        let catTargetPos = centerX - petOffset;
+        let dogTargetPos = centerX - petOffset;
         
         let catPos = catStartPos + (moveT * (catTargetPos - catStartPos) * 0.7);
         let dogPos = dogStartPos + (moveT * (dogTargetPos - dogStartPos) * 0.7);
@@ -234,7 +330,7 @@ function animate() {
 
     /* Phase 4 — Pets finish reaching human (35–55%) */
     if (p >= 35 && p <= 55) {
-        let t = easeOutCubic((p - 15) / 40); // Smooth completion
+        let t = easeOutCubic((p - 15) / 40);
 
         humanStanding.style.opacity = 0;
         humanHug.style.opacity = 1;
@@ -243,14 +339,11 @@ function animate() {
         cat.style.opacity = 1;
         dog.style.opacity = 1;
 
-        // Calculate center position
-        let centerX = window.innerWidth / 2;
+        let catStartPos = isMobile ? 10 : 20;
+        let dogStartPos = isMobile ? 10 : 20;
         
-        let catStartPos = 20;
-        let dogStartPos = 20;
-        
-        let catTargetPos = centerX - 150;
-        let dogTargetPos = centerX - 150;
+        let catTargetPos = centerX - petOffset;
+        let dogTargetPos = centerX - petOffset;
         
         let catPos = catStartPos + (t * (catTargetPos - catStartPos));
         let dogPos = dogStartPos + (t * (dogTargetPos - dogStartPos));
@@ -259,41 +352,36 @@ function animate() {
         dog.style.right = `${dogPos}px`;
     }
 
-    /* Phase 4 — Moment they touch, logo starts fading in (55–70%) */
+    /* Phase 5 — Moment they touch, logo starts fading in (55–70%) */
     if (p >= 55 && p <= 70) {
-        let centerX = window.innerWidth / 2;
-        let logoT = (p - 55) / 15; // Logo fade progress
+        let logoT = (p - 55) / 15;
         
         humanHug.style.opacity = 1;
         cat.style.opacity = 1;
         dog.style.opacity = 1;
-        cat.style.left = `${centerX - 150}px`;
-        dog.style.right = `${centerX - 150}px`;
+        cat.style.left = `${centerX - petOffset}px`;
+        dog.style.right = `${centerX - petOffset}px`;
         
-        // Logo begins to fade in at the exact moment they meet
-        logo.style.opacity = logoT * 0.5; // Start appearing gently
+        logo.style.opacity = logoT * 0.5;
         logo.style.transform = `translate(-50%, -50%) scale(${0.3 + (logoT * 0.2)})`;
     }
 
-    /* Phase 5 — Everyone fades out as logo becomes prominent (70–88%) */
+    /* Phase 6 — Everyone fades out as logo becomes prominent (70–88%) */
     if (p >= 70 && p <= 88) {
         let t = easeInOutCubic((p - 70) / 18);
-        let centerX = window.innerWidth / 2;
 
-        // Characters fade out
         humanHug.style.opacity = 1 - t;
         cat.style.opacity = 1 - t;
         dog.style.opacity = 1 - t;
         
-        cat.style.left = `${centerX - 150}px`;
-        dog.style.right = `${centerX - 150}px`;
+        cat.style.left = `${centerX - petOffset}px`;
+        dog.style.right = `${centerX - petOffset}px`;
 
-        // Logo continues to grow and become fully visible
         logo.style.opacity = 0.5 + (t * 0.5);
         logo.style.transform = `translate(-50%, -50%) scale(${0.5 + (t * 0.5)})`;
     }
 
-    /* Phase 6 — Logo holds (88–92%) */
+    /* Phase 7 — Logo holds (88–92%) */
     if (p >= 88 && p <= 92) {
         humanHug.style.opacity = 0;
         cat.style.opacity = 0;
@@ -302,21 +390,20 @@ function animate() {
         logo.style.transform = 'translate(-50%, -50%) scale(1)';
     }
 
-    /* Phase 7 — Hold logo (92–100%) */
+    /* Phase 8 — Hold logo and redirect (92–100%) */
     if (p >= 92) {
         logo.style.opacity = 1;
         logo.style.transform = 'translate(-50%, -50%) scale(1)';
 
-        /* Auto redirect after reaching the end */
         if (p >= 99.8 && !window.redirectScheduled) {
             window.redirectScheduled = true;
             setTimeout(() => {
                 document.body.style.transition = 'opacity 0.8s ease';
                 document.body.style.opacity = '0';
                 setTimeout(() => {
-                    window.location.href = "main.html";
+                    window.location.href = "pets.html";
                 }, 800);
-            }, 3000); // Wait 3 seconds before redirect
+            }, 3000);
         }
     }
 }
@@ -331,6 +418,15 @@ window.addEventListener("scroll", () => {
         });
         ticking = true;
     }
+});
+
+// Re-calculate on resize
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        animate();
+    }, 100);
 });
 
 animate();
