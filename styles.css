@@ -166,13 +166,8 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
     border-radius: 50%;
     overflow: hidden;
-    touch-action: none;
 }
 
 .pet-image img {
@@ -180,8 +175,11 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: drop-shadow(0 10px 30px rgba(4, 48, 52, 0.1));
+    border-radius: 50%;  /* <--- add this */
+    display: block;       /* avoids inline spacing issues */
+    margin: 0 auto;
 }
+
 
 .decorative-circle {
     position: absolute;
