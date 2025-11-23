@@ -5,6 +5,45 @@ let draggedPetTarget = null;
 let touchClone = null;
 let activeDropZone = null;
 
+const petSounds = {
+    max: document.getElementById("sound-max"),
+    luna: document.getElementById("sound-luna"),
+    buddy: document.getElementById("sound-buddy"),
+    whiskers: document.getElementById("sound-whiskers")
+};
+
+
+function updateHearts(petElement, happiness) {
+    const heartsDisplay = petElement.parentElement.querySelector('.hearts-display');
+    const petName = petElement.dataset.pet;
+
+    heartsDisplay.textContent = "♥".repeat(happiness) + "♡".repeat(4 - happiness);
+
+    if (happiness === 4) {
+        const sound = petSounds[petName];
+        if (sound) {
+            sound.currentTime = 0;
+            sound.play();
+        }
+    }
+}
+
+
+document.querySelectorAll(".item").forEach(item => {
+    item.addEventListener("click", () => {
+        const pet = item.dataset.petTarget;
+        const petImg = document.querySelector(`.pet-image[data-pet="${pet}"]`);
+
+        let current = parseInt(petImg.dataset.happiness);
+
+        if (current < 4) {
+            current++;
+            petImg.dataset.happiness = current;
+            updateHearts(petImg, current); // ← CALL IT HERE
+        }
+    });
+});
+
 // Debounce function for performance
 function debounce(func, wait) {
     let timeout;
@@ -175,29 +214,33 @@ function cleanupDrag() {
 
 function handleDrop(zone, item, itemElement) {
     if (!item || !itemElement) return;
-    
+
     const petName = zone.dataset.pet;
     let happiness = parseInt(zone.dataset.happiness) || 0;
     happiness++;
     zone.dataset.happiness = happiness;
-    
+
+    // ⭐ ADD THIS LINE ⭐
+    updateHearts(zone, happiness);
+
     updatePetImage(zone, petName, happiness);
-    
+
     itemElement.classList.add('used');
     setTimeout(() => {
         itemElement.style.visibility = 'hidden';
     }, 400);
-    
+
     const loveMeter = zone.closest('.pet-image-container').querySelector('.hearts-display');
     const hearts = ['♡♡♡♡', '❤️♡♡♡', '❤️❤️♡♡', '❤️❤️❤️♡', '❤️❤️❤️❤️'];
     loveMeter.textContent = hearts[Math.min(happiness, 4)];
-    
+
     zone.classList.add('happy');
     setTimeout(() => zone.classList.remove('happy'), 500);
-    
+
     createFloatingHearts(zone);
     showItemMessage(zone, ['😋', '💧', '🎾', '🦴'][Math.floor(Math.random() * 4)]);
 }
+
 
 function updatePetImage(zone, petName, happiness) {
     const petImg = zone.querySelector('.pet-img');

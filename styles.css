@@ -297,6 +297,7 @@ body {
     right: 20%;
     animation-delay: 0.4s;
 }
+
 .item:active {
     transform: scale(1.2);
 }
