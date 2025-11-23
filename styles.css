@@ -32,7 +32,7 @@ body {
 .container {
     height: 100vh;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -45,14 +45,12 @@ body {
 
 .section {
     min-height: 100vh;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-align: center;
     position: relative;
-    padding: 60px;
+    padding: 80px 60px;
     overflow: hidden;
 }
 
@@ -604,7 +602,8 @@ body {
 /* MOBILE OPTIMIZATIONS */
 @media (max-width: 1024px) {
     .section {
-        padding: 90px 40px 50px;
+        padding: 100px 40px;
+        min-height: 100vh;
     }
 
     .pet-card {
@@ -649,7 +648,8 @@ body {
 
 @media (max-width: 768px) {
     .section {
-        padding: 80px 30px 40px;
+        padding: 100px 30px;
+        min-height: 100vh;
     }
 
     .pet-card {
@@ -782,7 +782,8 @@ body {
 
 @media (max-width: 480px) {
     .section {
-        padding: 70px 24px 30px;
+        padding: 90px 24px;
+        min-height: 100vh;
     }
 
     .pet-card {

@@ -3,6 +3,7 @@ let draggedItem = null;
 let draggedElement = null;
 let draggedPetTarget = null;
 let touchClone = null;
+let desktopClone = null;
 let activeDropZone = null;
 
 const petSounds = {
@@ -17,32 +18,19 @@ function updateHearts(petElement, happiness) {
     const heartsDisplay = petElement.parentElement.querySelector('.hearts-display');
     const petName = petElement.dataset.pet;
 
-    heartsDisplay.textContent = "♥".repeat(happiness) + "♡".repeat(4 - happiness);
+    // Use red hearts (❤️) for filled and empty hearts (♡) for unfilled
+    heartsDisplay.textContent = "❤️".repeat(happiness) + "♡".repeat(4 - happiness);
 
     if (happiness === 4) {
         const sound = petSounds[petName];
         if (sound) {
             sound.currentTime = 0;
-            sound.play();
+            sound.play().catch(error => {
+                console.log("Audio play failed:", error);
+            });
         }
     }
 }
-
-
-document.querySelectorAll(".item").forEach(item => {
-    item.addEventListener("click", () => {
-        const pet = item.dataset.petTarget;
-        const petImg = document.querySelector(`.pet-image[data-pet="${pet}"]`);
-
-        let current = parseInt(petImg.dataset.happiness);
-
-        if (current < 4) {
-            current++;
-            petImg.dataset.happiness = current;
-            updateHearts(petImg, current); // ← CALL IT HERE
-        }
-    });
-});
 
 // Debounce function for performance
 function debounce(func, wait) {
@@ -126,11 +114,14 @@ function handleTouchEnd(e) {
 }
 
 function handleMouseDown(e) {
+    e.preventDefault();
     const item = e.target;
     draggedItem = item.dataset.item;
     draggedPetTarget = item.dataset.petTarget;
     draggedElement = item;
     item.classList.add('dragging');
+    
+    createDesktopClone(item, e.clientX, e.clientY);
     
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -138,6 +129,7 @@ function handleMouseDown(e) {
 
 function handleMouseMove(e) {
     if (!draggedElement) return;
+    updateDesktopClone(e.clientX, e.clientY);
     checkDropZone(e.clientX, e.clientY);
 }
 
@@ -173,6 +165,26 @@ function updateTouchClone(x, y) {
     }
 }
 
+function createDesktopClone(item, x, y) {
+    desktopClone = item.cloneNode(true);
+    desktopClone.style.position = 'fixed';
+    desktopClone.style.left = x - 35 + 'px';
+    desktopClone.style.top = y - 35 + 'px';
+    desktopClone.style.zIndex = '10000';
+    desktopClone.style.pointerEvents = 'none';
+    desktopClone.style.transform = 'scale(1.3)';
+    desktopClone.style.filter = 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3))';
+    desktopClone.id = 'desktop-drag-clone';
+    document.body.appendChild(desktopClone);
+}
+
+function updateDesktopClone(x, y) {
+    if (desktopClone) {
+        desktopClone.style.left = x - 35 + 'px';
+        desktopClone.style.top = y - 35 + 'px';
+    }
+}
+
 function findDropZone(x, y) {
     const elements = document.elementsFromPoint(x, y);
     return elements.find(el => el.classList.contains('drop-zone'));
@@ -203,6 +215,10 @@ function cleanupDrag() {
         touchClone.remove();
         touchClone = null;
     }
+    if (desktopClone) {
+        desktopClone.remove();
+        desktopClone = null;
+    }
     if (activeDropZone) {
         activeDropZone.classList.remove('drag-over');
         activeDropZone = null;
@@ -220,23 +236,23 @@ function handleDrop(zone, item, itemElement) {
     happiness++;
     zone.dataset.happiness = happiness;
 
-    // ⭐ ADD THIS LINE ⭐
+    // Update hearts display
     updateHearts(zone, happiness);
 
+    // Update pet image
     updatePetImage(zone, petName, happiness);
 
+    // Hide the used item
     itemElement.classList.add('used');
     setTimeout(() => {
         itemElement.style.visibility = 'hidden';
     }, 400);
 
-    const loveMeter = zone.closest('.pet-image-container').querySelector('.hearts-display');
-    const hearts = ['♡♡♡♡', '❤️♡♡♡', '❤️❤️♡♡', '❤️❤️❤️♡', '❤️❤️❤️❤️'];
-    loveMeter.textContent = hearts[Math.min(happiness, 4)];
-
+    // Add happy animation
     zone.classList.add('happy');
     setTimeout(() => zone.classList.remove('happy'), 500);
 
+    // Show floating hearts and message
     createFloatingHearts(zone);
     showItemMessage(zone, ['😋', '💧', '🎾', '🦴'][Math.floor(Math.random() * 4)]);
 }
