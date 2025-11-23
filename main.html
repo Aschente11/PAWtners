@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Meet the Pets - PAWtners</title>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
@@ -49,7 +49,7 @@
     }
 
     .section {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -780,6 +780,7 @@
         z-index: 10000;
         align-items: center;
         justify-content: center;
+        padding: 20px;
     }
 
     .modal.active {
@@ -797,6 +798,7 @@
         padding: 60px;
         border-radius: 30px;
         max-width: 550px;
+        width: 100%;
         text-align: center;
         animation: modalPop 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 50px 100px rgba(4, 48, 52, 0.3);
@@ -880,10 +882,29 @@
         opacity: 0.7;
     }
 
+    /* MOBILE RESPONSIVE STYLES */
+    @media (max-width: 1200px) {
+        .pet-image-container {
+            width: 380px;
+            height: 380px;
+        }
+
+        .circle-1, .circle-2 {
+            width: 430px;
+            height: 430px;
+        }
+    }
+
     @media (max-width: 1024px) {
+        .section {
+            padding: 60px 40px;
+            min-height: auto;
+            scroll-snap-align: none;
+        }
+
         .pet-card {
             grid-template-columns: 1fr;
-            gap: 50px;
+            gap: 40px;
             text-align: center;
         }
 
@@ -892,39 +913,77 @@
         }
 
         .pet-image-container {
+            width: 320px;
+            height: 320px;
+        }
+
+        .circle-1 {
+            width: 370px;
+            height: 370px;
+        }
+
+        .circle-2 {
             width: 350px;
             height: 350px;
         }
 
         .pet-name {
-            font-size: 52px;
+            font-size: 48px;
+        }
+
+        .pet-breed {
+            font-size: 18px;
+        }
+
+        .pet-story {
+            font-size: 20px;
+            padding-left: 25px;
+        }
+
+        .pet-description {
+            font-size: 16px;
         }
 
         .header-section h1 {
-            font-size: 64px;
+            font-size: 72px;
+        }
+
+        .header-section .subtitle {
+            font-size: 24px;
         }
 
         .pet-actions {
             justify-content: center;
-        }
-
-        .pet-story {
-            border-left: none;
-            padding-left: 0;
-            border-top: 4px solid var(--orange);
-            padding-top: 20px;
+            flex-wrap: wrap;
         }
 
         .item {
-            width: 70px;
-            height: 70px;
-            font-size: 30px;
+            width: 65px;
+            height: 65px;
+            font-size: 40px;
+        }
+
+        .event-logo {
+            width: 200px;
+        }
+
+        .gradient-orb {
+            filter: blur(60px);
         }
     }
 
     @media (max-width: 768px) {
         .section {
-            padding: 60px 30px;
+            padding: 40px 24px;
+            scroll-snap-type: none;
+        }
+
+        .container {
+            scroll-snap-type: none;
+        }
+
+        .pet-card {
+            gap: 30px;
         }
 
         .pet-image-container {
@@ -932,63 +991,315 @@
             height: 280px;
         }
 
+        .circle-1 {
+            width: 320px;
+            height: 320px;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+        }
+
+        .love-meter {
+            top: -40px;
+        }
+
+        .hearts-display {
+            font-size: 18px;
+            letter-spacing: 6px;
+        }
+
         .pet-name {
-            font-size: 42px;
+            font-size: 40px;
+        }
+
+        .pet-breed {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .pet-story {
+            font-size: 18px;
+            padding-left: 0;
+            padding-top: 15px;
+            border-left: none;
+            border-top: 4px solid var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .pet-description {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .pet-traits {
+            gap: 10px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+
+        .trait {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+
+        .pet-actions {
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 16px 36px;
+            font-size: 14px;
         }
 
         .header-section h1 {
-            font-size: 48px;
+            font-size: 56px;
+            margin-bottom: 20px;
         }
 
         .header-section .subtitle {
             font-size: 20px;
         }
 
+        .scroll-indicator {
+            bottom: 30px;
+            font-size: 12px;
+        }
+
         .modal-content {
             padding: 40px 30px;
             margin: 20px;
+            border-radius: 24px;
         }
 
-        .pet-actions {
-            flex-direction: column;
-        }
-
-        .action-btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .event-details-card {
-            padding: 30px 25px;
-        }
-
-        .event-icon {
+        .modal-content h2 {
             font-size: 36px;
+            margin-bottom: 20px;
         }
 
-        .event-text h3 {
-            font-size: 20px;
-        }
-
-        .event-text p {
+        .modal-content p {
             font-size: 16px;
+            margin-bottom: 30px;
         }
 
-        .event-content h1 {
-            font-size: 48px;
+        .close-modal {
+            padding: 16px 40px;
+            font-size: 14px;
+        }
+
+        .event-logo {
+            width: 180px;
+            margin-bottom: 24px;
+        }
+
+        .event-content .subtitle {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            font-size: 16px;
         }
 
         .item {
             width: 60px;
             height: 60px;
-            font-size: 26px;
+            font-size: 36px;
         }
 
         .instruction-tooltip {
             top: 20px;
+            font-size: 12px;
+            padding: 10px 18px;
+            max-width: 85%;
+        }
+
+        .gradient-orb {
+            filter: blur(50px);
+            opacity: 0.2;
+        }
+
+        .orb-1, .orb-2, .orb-3 {
+            width: 250px;
+            height: 250px;
+        }
+
+        .pet-image:hover {
+            transform: scale(1.04) rotate(-1deg);
+        }
+
+        .item:hover:not(.dragging):not(.used) {
+            transform: scale(1.2) rotate(10deg);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section {
+            padding: 32px 20px;
+        }
+
+        .pet-image-container {
+            width: 240px;
+            height: 240px;
+        }
+
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+        }
+
+        .circle-2 {
+            width: 260px;
+            height: 260px;
+        }
+
+        .decorative-circle {
+            border-width: 2px;
+        }
+
+        .pet-name {
+            font-size: 36px;
+        }
+
+        .pet-breed {
+            font-size: 15px;
+        }
+
+        .pet-story {
+            font-size: 16px;
+            padding-top: 12px;
+            border-top-width: 3px;
+        }
+
+        .pet-description {
+            font-size: 14px;
+        }
+
+        .pet-tag {
+            font-size: 10px;
+            padding: 6px 16px;
+            margin-bottom: 20px;
+        }
+
+        .trait {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .action-btn {
+            padding: 14px 32px;
             font-size: 13px;
-            padding: 10px 20px;
-            max-width: 80%;
+        }
+
+        .header-section h1 {
+            font-size: 44px;
+        }
+
+        .header-section .subtitle {
+            font-size: 18px;
+        }
+
+        .modal-content {
+            padding: 32px 24px;
+        }
+
+        .modal-content h2 {
+            font-size: 32px;
+        }
+
+        .modal-content p {
+            font-size: 15px;
+        }
+
+        .event-logo {
+            width: 150px;
+        }
+
+        .event-content .subtitle {
+            font-size: 18px;
+        }
+
+        .contact-info {
+            font-size: 15px;
+        }
+
+        .item {
+            width: 55px;
+            height: 55px;
+            font-size: 32px;
+        }
+
+        .love-meter {
+            top: -35px;
+        }
+
+        .hearts-display {
+            font-size: 16px;
+            letter-spacing: 4px;
+        }
+
+        .floating-heart {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .pet-image-container {
+            width: 220px;
+            height: 220px;
+        }
+
+        .pet-name {
+            font-size: 32px;
+        }
+
+        .header-section h1 {
+            font-size: 38px;
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            font-size: 28px;
+        }
+    }
+
+    /* Touch improvements for mobile */
+    @media (hover: none) and (pointer: coarse) {
+        .trait:hover {
+            transform: none;
+        }
+
+        .trait:active {
+            background: var(--dark-teal);
+            color: white;
+            transform: scale(0.95);
+        }
+
+        .action-btn:hover {
+            transform: none;
+        }
+
+        .action-btn:active {
+            transform: scale(0.97);
+        }
+
+        .pet-image-container:hover .image-bg-circle {
+            transform: none;
+        }
+
+        .pet-image:hover {
+            transform: none;
+        }
+
+        .item:hover:not(.dragging):not(.used) {
+            transform: none;
         }
     }
 </style>
@@ -1246,17 +1557,14 @@ function petAnimal(element) {
 
 // Calculate tilt based on movement direction
 function calculateTilt(deltaX, deltaY) {
-    // Calculate angle and magnitude of movement
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     
-    if (distance < 2) return { rotate: 0, scale: 1 }; // No movement, no tilt
+    if (distance < 2) return { rotate: 0, scale: 1 };
     
-    // Limit the tilt based on movement speed
-    const maxTilt = 8; // Maximum rotation in degrees
+    const maxTilt = 8;
     const tiltX = Math.max(-maxTilt, Math.min(maxTilt, deltaX * 0.3));
     const tiltY = Math.max(-maxTilt, Math.min(maxTilt, deltaY * 0.2));
     
-    // Combine tilts (X movement creates rotation, Y movement creates scale)
     const rotate = tiltX;
     const scale = 1 + Math.min(0.03, Math.abs(deltaY) * 0.001);
     
@@ -1273,26 +1581,22 @@ function startPetting(element, clientX, clientY) {
         isPetting = true;
         element.classList.add('being-petted');
         document.body.classList.add('petting-mode');
-    }, 300); // Long press duration
+    }, 300);
 }
 
-// Continue petting (dragging) - track movement direction
+// Continue petting
 function continuePetting(element, clientX, clientY) {
     if (isPetting) {
-        // Calculate movement delta
         const deltaX = clientX - lastMouseX;
         const deltaY = clientY - lastMouseY;
         
-        // Apply tilt based on drag direction
         const { rotate, scale } = calculateTilt(deltaX, deltaY);
         element.style.transform = `rotate(${rotate}deg) scale(${scale})`;
         
-        // Create subtle sparkles at current position
         if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
             createPettingSparkle(clientX, clientY);
         }
         
-        // Update last position
         lastMouseX = clientX;
         lastMouseY = clientY;
     }
@@ -1307,8 +1611,6 @@ function stopPetting(element) {
     if (isPetting) {
         element.classList.remove('being-petted');
         document.body.classList.remove('petting-mode');
-        
-        // Reset transform smoothly
         element.style.transform = '';
     }
     
@@ -1317,12 +1619,11 @@ function stopPetting(element) {
     currentPetElement = null;
 }
 
-// Create subtle sparkles during petting
+// Create sparkles
 function createPettingSparkle(clientX, clientY) {
     const sparkle = document.createElement('div');
     sparkle.className = 'petting-sparkle';
     
-    // Random direction
     const angle = Math.random() * Math.PI * 2;
     const distance = 20 + Math.random() * 30;
     const tx = Math.cos(angle) * distance;
@@ -1338,13 +1639,11 @@ function createPettingSparkle(clientX, clientY) {
     setTimeout(() => sparkle.remove(), 1500);
 }
 
-// Add petting event listeners to all pet images
+// Add petting event listeners
 document.querySelectorAll('.pet-image.drop-zone').forEach(petImage => {
     let isMouseDown = false;
     
-    // Mouse events
     petImage.addEventListener('mousedown', (e) => {
-        // Only trigger petting, don't let the click through
         if (!e.target.classList.contains('item')) {
             e.preventDefault();
             e.stopPropagation();
@@ -1353,7 +1652,6 @@ document.querySelectorAll('.pet-image.drop-zone').forEach(petImage => {
         }
     });
     
-    // Use document-level listeners for move and up to track outside the element
     document.addEventListener('mousemove', (e) => {
         if (isMouseDown && currentPetElement === petImage) {
             e.preventDefault();
@@ -1368,19 +1666,18 @@ document.querySelectorAll('.pet-image.drop-zone').forEach(petImage => {
         }
     });
     
-    // Touch events
     petImage.addEventListener('touchstart', (e) => {
         const touch = e.touches[0];
         startPetting(petImage, touch.clientX, touch.clientY);
-    });
+    }, { passive: true });
     
     petImage.addEventListener('touchmove', (e) => {
         if (pettingTimeout || isPetting) {
-            e.preventDefault(); // Prevent scrolling while petting
+            e.preventDefault();
             const touch = e.touches[0];
             continuePetting(petImage, touch.clientX, touch.clientY);
         }
-    });
+    }, { passive: false });
     
     petImage.addEventListener('touchend', () => {
         stopPetting(petImage);
@@ -1504,7 +1801,6 @@ function handleDrop(zone, item, itemElement) {
     happiness++;
     zone.dataset.happiness = happiness;
     
-    // Update pet image based on happiness level
     updatePetImage(zone, petName, happiness);
     
     itemElement.classList.add('used');
@@ -1533,11 +1829,9 @@ function handleDrop(zone, item, itemElement) {
     showItemMessage(zone, message);
 }
 
-// Function to update pet images based on happiness
 function updatePetImage(zone, petName, happiness) {
     const petImg = zone.querySelector('.pet-img');
     
-    // Define image mappings for each pet
     const petImages = {
         max: {
             sad: 'pets/sadDog.jpeg',
@@ -1557,7 +1851,6 @@ function updatePetImage(zone, petName, happiness) {
         }
     };
     
-    // Switch to happy image when happiness reaches maximum (4)
     if (happiness >= 4) {
         petImg.src = petImages[petName].happy;
     } else {
@@ -1633,76 +1926,21 @@ function scrollToEvent(petName) {
     eventSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-function playSound(type) {
-    const sounds = {
-        'woof': { emoji: '🐶', text: 'Woof woof!' },
-        'meow': { emoji: '🐱', text: 'Meow~' }
-    };
-    
-    const sound = sounds[type];
-    
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 30px 50px;
-        border-radius: 25px;
-        box-shadow: 0 30px 80px rgba(4, 48, 52, 0.3);
-        z-index: 9999;
-        font-size: 36px;
-        font-weight: bold;
-        color: var(--dark-teal);
-        animation: soundPop 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        pointer-events: none;
-        text-align: center;
-    `;
-    notification.innerHTML = `<div style="font-size: 48px; margin-bottom: 10px;">${sound.emoji}</div>${sound.text}`;
-    document.body.appendChild(notification);
-    
-    const soundStyle = document.createElement('style');
-    soundStyle.textContent = `
-        @keyframes soundPop {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            30% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            70% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8) translateY(-30px);
-            }
-        }
-    `;
-    document.head.appendChild(soundStyle);
-    
-    setTimeout(() => {
-        notification.remove();
-        soundStyle.remove();
-    }, 1200);
+function closeModal() {
+    const modal = document.getElementById('adoptModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 
 document.getElementById('adoptModal').addEventListener('click', (e) => {
     if (e.target.id === 'adoptModal') {
-        e.target.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        closeModal();
     }
 });
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        const modal = document.getElementById('adoptModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        closeModal();
     }
 });
 
