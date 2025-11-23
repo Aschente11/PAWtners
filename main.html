@@ -38,7 +38,7 @@
     .container {
         height: 100vh;
         overflow-y: scroll;
-        scroll-snap-type: y mandatory;
+        scroll-snap-type: y proximity;
         scroll-behavior: smooth;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -53,8 +53,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
+        scroll-snap-align: center;
+        scroll-snap-stop: normal;
         position: relative;
         padding: 80px 60px;
         overflow: hidden;
@@ -893,18 +893,23 @@
             width: 430px;
             height: 430px;
         }
+        
+        .pet-image img {
+            width: 88%;
+            height: 88%;
+        }
     }
 
     @media (max-width: 1024px) {
         .section {
-            padding: 60px 40px;
-            min-height: auto;
-            scroll-snap-align: none;
+            padding: 80px 40px;
+            min-height: 100vh;
+            scroll-snap-align: center;
         }
 
         .pet-card {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 50px;
             text-align: center;
         }
 
@@ -913,18 +918,23 @@
         }
 
         .pet-image-container {
-            width: 320px;
-            height: 320px;
+            width: 340px;
+            height: 340px;
         }
 
         .circle-1 {
-            width: 370px;
-            height: 370px;
+            width: 390px;
+            height: 390px;
         }
 
         .circle-2 {
-            width: 350px;
-            height: 350px;
+            width: 370px;
+            height: 370px;
+        }
+        
+        .pet-image img {
+            width: 86%;
+            height: 86%;
         }
 
         .pet-name {
@@ -974,31 +984,37 @@
 
     @media (max-width: 768px) {
         .section {
-            padding: 40px 24px;
-            scroll-snap-type: none;
+            padding: 60px 30px;
+            min-height: 100vh;
+            scroll-snap-align: center;
         }
 
         .container {
-            scroll-snap-type: none;
+            scroll-snap-type: y proximity;
         }
 
         .pet-card {
-            gap: 30px;
+            gap: 40px;
         }
 
         .pet-image-container {
-            width: 280px;
-            height: 280px;
+            width: 300px;
+            height: 300px;
         }
 
         .circle-1 {
-            width: 320px;
-            height: 320px;
+            width: 340px;
+            height: 340px;
         }
 
         .circle-2 {
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
+        }
+        
+        .pet-image img {
+            width: 84%;
+            height: 84%;
         }
 
         .love-meter {
@@ -1011,11 +1027,11 @@
         }
 
         .pet-name {
-            font-size: 40px;
+            font-size: 42px;
         }
 
         .pet-breed {
-            font-size: 16px;
+            font-size: 17px;
             margin-bottom: 20px;
         }
 
@@ -1030,7 +1046,7 @@
 
         .pet-description {
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.8;
             margin-bottom: 25px;
         }
 
@@ -1111,6 +1127,8 @@
             width: 60px;
             height: 60px;
             font-size: 36px;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .instruction-tooltip {
@@ -1141,22 +1159,32 @@
 
     @media (max-width: 480px) {
         .section {
-            padding: 32px 20px;
+            padding: 50px 24px;
+            min-height: 100vh;
+        }
+
+        .pet-card {
+            gap: 35px;
         }
 
         .pet-image-container {
-            width: 240px;
-            height: 240px;
+            width: 260px;
+            height: 260px;
         }
 
         .circle-1 {
-            width: 280px;
-            height: 280px;
+            width: 300px;
+            height: 300px;
         }
 
         .circle-2 {
-            width: 260px;
-            height: 260px;
+            width: 280px;
+            height: 280px;
+        }
+        
+        .pet-image img {
+            width: 82%;
+            height: 82%;
         }
 
         .decorative-circle {
@@ -1251,8 +1279,23 @@
 
     @media (max-width: 360px) {
         .pet-image-container {
-            width: 220px;
-            height: 220px;
+            width: 240px;
+            height: 240px;
+        }
+        
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+        }
+
+        .circle-2 {
+            width: 260px;
+            height: 260px;
+        }
+        
+        .pet-image img {
+            width: 80%;
+            height: 80%;
         }
 
         .pet-name {
@@ -1723,17 +1766,21 @@ document.querySelectorAll('.item').forEach(item => {
         clone.style.top = touch.clientY - 35 + 'px';
         clone.style.zIndex = '10000';
         clone.style.pointerEvents = 'none';
+        clone.style.willChange = 'transform';
         clone.id = 'drag-clone';
         document.body.appendChild(clone);
-    });
+    }, { passive: false });
 
     item.addEventListener('touchmove', (e) => {
+        if (!draggedElement) return;
         e.preventDefault();
         const touch = e.touches[0];
         const clone = document.getElementById('drag-clone');
         if (clone) {
-            clone.style.left = touch.clientX - 35 + 'px';
-            clone.style.top = touch.clientY - 35 + 'px';
+            requestAnimationFrame(() => {
+                clone.style.left = touch.clientX - 35 + 'px';
+                clone.style.top = touch.clientY - 35 + 'px';
+            });
         }
         
         const dropZone = document.querySelector(`.drop-zone[data-pet="${draggedPetTarget}"]`);
@@ -1746,7 +1793,7 @@ document.querySelectorAll('.item').forEach(item => {
                 dropZone.classList.remove('drag-over');
             }
         }
-    });
+    }, { passive: false });
 
     item.addEventListener('touchend', (e) => {
         e.preventDefault();
