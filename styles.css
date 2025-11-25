@@ -593,7 +593,6 @@ body {
 .story-buttons-header h2 {
     font-family: 'Chunko', 'Playfair Display', serif;
     font-size: 72px;
-    font-weight: bold;
     color: var(--dark-teal);
     margin-bottom: 20px;
     letter-spacing: -2px;
@@ -647,7 +646,6 @@ body {
 .story-button-title {
     font-family: 'Chunko', 'Playfair Display', serif;
     font-size: 32px;
-    font-weight: bold;
     color: var(--dark-teal);
     transition: all 0.3s ease;
     line-height: 1.2;
