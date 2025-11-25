@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Adoption Stories - PAWtners</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --orange: #f36e23;
+            --yellow: #f5de65;
+            --cream: #f0e2d4;
+            --teal: #91d4d5;
+            --dark-teal: #043034;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark-teal);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--orange);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--teal);
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--yellow);
+            top: 50%;
+            right: 10%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        header p {
+            font-size: 20px;
+            color: var(--dark-teal);
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .stats-bar {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .stats-bar .count {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 5px;
+        }
+
+        .stats-bar .label {
+            font-size: 16px;
+            color: var(--dark-teal);
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .connection-status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .connection-status.connected {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .connection-status.disconnected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .story-card {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: popIn 0.6s ease-out;
+            border: 2px solid transparent;
+        }
+
+        .story-card.new {
+            animation: popInBig 0.8s ease-out;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(4, 48, 52, 0.2);
+            border-color: var(--teal);
+        }
+
+        .story-card:nth-child(3n+1) {
+            border-top: 4px solid var(--orange);
+        }
+
+        .story-card:nth-child(3n+2) {
+            border-top: 4px solid var(--teal);
+        }
+
+        .story-card:nth-child(3n) {
+            border-top: 4px solid var(--yellow);
+        }
+
+        .story-header {
+            margin-bottom: 20px;
+        }
+
+        .story-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 8px;
+        }
+
+        .story-card .pet-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            color: var(--teal);
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .story-card .pet-name::before {
+            content: '🐾';
+            font-size: 18px;
+        }
+
+        .story-card p {
+            color: var(--dark-teal);
+            line-height: 1.7;
+            font-size: 15px;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
+
+        .story-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(4, 48, 52, 0.1);
+        }
+
+        .story-card .date {
+            font-size: 13px;
+            color: var(--dark-teal);
+            opacity: 0.5;
+            font-weight: 500;
+        }
+
+        .story-card .heart-icon {
+            font-size: 20px;
+            color: var(--orange);
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes popInBig {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(30px);
+            }
+            50% {
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 40px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
+            border: 3px dashed rgba(4, 48, 52, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .empty-state .icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+            color: var(--dark-teal);
+            opacity: 0.6;
+            line-height: 1.6;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.01);
+                opacity: 0.95;
+            }
+        }
+
+        .live-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--dark-teal);
+            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.2);
+            border: 1.5px solid rgba(4, 48, 52, 0.1);
+            font-weight: 500;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        .qr-prompt {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark-teal);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            box-shadow: 0 15px 40px rgba(4, 48, 52, 0.3);
+            text-align: center;
+            z-index: 100;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .qr-prompt p {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 50px 30px;
+            }
+
+            header h1 {
+                font-size: 52px;
+            }
+
+            .stories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            header h1 {
+                font-size: 42px;
+            }
+
+            header p {
+                font-size: 18px;
+            }
+
+            .stats-bar .count {
+                font-size: 38px;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .story-card {
+                padding: 30px 25px;
+            }
+
+            .story-card h3 {
+                font-size: 24px;
+            }
+
+            .qr-prompt {
+                bottom: 20px;
+                padding: 15px 30px;
+            }
+
+            .qr-prompt p {
+                font-size: 14px;
+            }
+
+            .live-indicator {
+                top: 20px;
+                right: 20px;
+                font-size: 12px;
+                padding: 10px 20px;
+            }
+
+            .gradient-orb {
+                filter: blur(60px);
+                opacity: 0.2;
+            }
+
+            .orb-1, .orb-2, .orb-3 {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 36px;
+            }
+
+            .stats-bar {
+                padding: 20px;
+            }
+
+            .stats-bar .count {
+                font-size: 32px;
+            }
+
+            .empty-state {
+                padding: 60px 30px;
+            }
+
+            .empty-state .icon {
+                font-size: 60px;
+            }
+
+            .empty-state h3 {
+                font-size: 28px;
+            }
+
+            .empty-state p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
+    <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span>Live Updates</span>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🐾 Adoption Stories</h1>
+            <p>Real journeys from real adopters</p>
+        </header>
+
+        <div class="connection-status connected" id="connectionStatus">
+            ✓ Connected to Firebase
+        </div>
+
+        <div class="stats-bar">
+            <div class="count" id="storyCount">0</div>
+            <div class="label">Stories Shared</div>
+        </div>
+
+        <div id="storiesGrid" class="stories-grid">
+            <!-- Stories will appear here -->
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <div class="icon">📝</div>
+            <h3>Waiting for Stories...</h3>
+            <p>Scan the QR code to share your adoption journey<br>and inspire others to adopt!</p>
+        </div>
+    </div>
+
+    <div class="qr-prompt">
+        <p>📱 Scan QR Code to Share Your Story</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAcQM4rJHSdvIJDgtw2XsA88rHz5MQCiF8",
+            authDomain: "pawtners-stories.firebaseapp.com",
+            databaseURL: "https://pawtners-stories-default-rtdb.firebaseio.com",
+            projectId: "pawtners-stories",
+            storageBucket: "pawtners-stories.firebasestorage.app",
+            messagingSenderId: "188046259694",
+            appId: "1:188046259694:web:2c9663097851b852f94aff"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const storiesGrid = document.getElementById('storiesGrid');
+        const emptyState = document.getElementById('emptyState');
+        const storyCountEl = document.getElementById('storyCount');
+        const connectionStatus = document.getElementById('connectionStatus');
+
+        let displayedStories = new Set();
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Listen for real-time updates
+        const storiesRef = ref(database, 'stories');
+        
+        onValue(storiesRef, (snapshot) => {
+            const data = snapshot.val();
+            
+            if (!data) {
+                // No stories yet
+                storiesGrid.innerHTML = '';
+                emptyState.style.display = 'block';
+                storyCountEl.textContent = '0';
+                displayedStories.clear();
+                return;
+            }
+
+            // Convert to array
+            const stories = Object.keys(data).map(key => ({
+                key: key,
+                ...data[key]
+            }));
+
+            // Hide empty state
+            emptyState.style.display = 'none';
+            storyCountEl.textContent = stories.length;
+
+            // Sort by newest first
+            stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            // Check for new stories
+            const currentKeys = new Set(stories.map(s => s.key));
+            const newStories = stories.filter(s => !displayedStories.has(s.key));
+
+            // Update displayed stories set
+            displayedStories = currentKeys;
+
+            // Clear and rebuild grid
+            storiesGrid.innerHTML = '';
+
+            // Display all stories
+            stories.forEach(story => {
+                const isNew = newStories.some(ns => ns.key === story.key);
+                const card = document.createElement('div');
+                card.className = 'story-card' + (isNew ? ' new' : '');
+                
+                const date = new Date(story.timestamp);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                card.innerHTML = `
+                    <div class="story-header">
+                        <h3>${escapeHtml(story.yourName)}</h3>
+                        <div class="pet-name">${escapeHtml(story.petName)}</div>
+                    </div>
+                    <p>${escapeHtml(story.story)}</p>
+                    <div class="story-footer">
+                        <div class="date">${formattedDate}</div>
+                        <div class="heart-icon">❤️</div>
+                    </div>
+                `;
+                
+                storiesGrid.appendChild(card);
+            });
+
+            // Update connection status
+            connectionStatus.textContent = '✓ Connected - Live Updates Active';
+            connectionStatus.className = 'connection-status connected';
+
+        }, (error) => {
+            console.error('Firebase error:', error);
+            connectionStatus.textContent = '⚠ Connection Error';
+            connectionStatus.className = 'connection-status disconnected';
+        });
+    </script>
+</body>
+</html>

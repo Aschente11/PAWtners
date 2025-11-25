@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Share Your Story - PAWtners</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --orange: #f36e23;
+            --yellow: #f5de65;
+            --cream: #f0e2d4;
+            --teal: #91d4d5;
+            --dark-teal: #043034;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark-teal);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--orange);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--teal);
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 8px;
+            font-weight: 800;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        header p {
+            font-size: 8px;
+            color: var(--dark-teal);
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .submit-section {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 30px 80px rgba(4, 48, 52, 0.15);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--orange);
+            color: white;
+            border-radius: 30px;
+            font-size: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 6px;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 10px;
+        }
+
+        .section-header .subtitle {
+            font-size: 15px;
+            color: var(--dark-teal);
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--dark-teal);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1.5px solid rgba(4, 48, 52, 0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            color: var(--dark-teal);
+            transition: all 0.3s ease;
+            background: var(--cream);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(145, 212, 213, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 13px;
+            color: var(--dark-teal);
+            opacity: 0.5;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px 40px;
+            background: var(--dark-teal);
+            color: white;
+            border: 1.5px solid var(--dark-teal);
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: var(--orange);
+            border-color: var(--orange);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(243, 110, 35, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 25px;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-message .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        .success-message strong {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .success-message p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            color: #c41e3a;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 2px solid #fcc;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: var(--dark-teal);
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            header h1 {
+                font-size: 38px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .submit-section {
+                padding: 35px 25px;
+                border-radius: 24px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+
+            .submit-btn {
+                padding: 16px 36px;
+                font-size: 14px;
+            }
+
+            .gradient-orb {
+                filter: blur(60px);
+                opacity: 0.2;
+            }
+
+            .orb-1, .orb-2 {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            .submit-section {
+                padding: 30px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 24px;
+            }
+
+            .section-tag {
+                font-size: 11px;
+                padding: 6px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+
+    <div class="container">
+        <header>
+            <h1>🐾 Share Your Story</h1>
+            <p>Tell us about your rescue journey</p>
+        </header>
+
+        <div class="submit-section">
+            <div class="section-header">
+                <span class="section-tag">Adoption Stories</span>
+            </div>
+
+            <form id="storyForm">
+                <div class="form-group">
+                    <label for="yourName">Your Name *</label>
+                    <input type="text" id="yourName" required placeholder="Enter your name" maxlength="50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="petName">Pet's Name *</label>
+                    <input type="text" id="petName" required placeholder="Enter your pet's name" maxlength="50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="story">Your Story *</label>
+                    <textarea id="story" required placeholder="Share your adoption journey... How did you meet? What makes your pet special? How has your life changed?" maxlength="500"></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span>/500 characters
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Share My Story
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <div class="icon">🎉</div>
+                <strong>Story Shared!</strong>
+                <p>Your story will appear on the display wall in seconds!</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                ⚠️ Unable to save story. Please check your connection and try again.
+            </div>
+        </div>
+
+        <footer>
+            <p>PAWtners Animal Welfare Event 2025</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, push, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAcQM4rJHSdvIJDgtw2XsA88rHz5MQCiF8",
+            authDomain: "pawtners-stories.firebaseapp.com",
+            databaseURL: "https://pawtners-stories-default-rtdb.firebaseio.com",
+            projectId: "pawtners-stories",
+            storageBucket: "pawtners-stories.firebasestorage.app",
+            messagingSenderId: "188046259694",
+            appId: "1:188046259694:web:2c9663097851b852f94aff"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Form elements
+        const form = document.getElementById('storyForm');
+        const storyTextarea = document.getElementById('story');
+        const charCount = document.getElementById('charCount');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Character counter
+        storyTextarea.addEventListener('input', () => {
+            const length = storyTextarea.value.length;
+            charCount.textContent = length;
+            
+            if (length >= 500) {
+                charCount.style.color = 'var(--orange)';
+                charCount.style.opacity = '1';
+            } else {
+                charCount.style.color = 'var(--dark-teal)';
+                charCount.style.opacity = '0.5';
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+
+            const newStory = {
+                yourName: document.getElementById('yourName').value.trim(),
+                petName: document.getElementById('petName').value.trim(),
+                story: document.getElementById('story').value.trim(),
+                timestamp: new Date().toISOString(),
+                id: Date.now()
+            };
+
+            try {
+                // Save to Firebase
+                const storiesRef = ref(database, 'stories');
+                const newStoryRef = push(storiesRef);
+                await set(newStoryRef, newStory);
+
+                // Show success message
+                successMessage.classList.add('show');
+                submitBtn.textContent = '✓ Submitted!';
+                submitBtn.style.background = '#22c55e';
+                submitBtn.style.borderColor = '#22c55e';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    form.reset();
+                    charCount.textContent = '0';
+                    successMessage.classList.remove('show');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Share My Story';
+                    submitBtn.style.background = 'var(--dark-teal)';
+                    submitBtn.style.borderColor = 'var(--dark-teal)';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error saving story:', error);
+                errorMessage.textContent = '⚠️ Error: ' + error.message;
+                errorMessage.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Share My Story';
+            }
+        });
+    </script>
+</body>
+</html>
