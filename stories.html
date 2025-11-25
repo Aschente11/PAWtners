@@ -8,6 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Chunko';
+            src: url('chunko-bold-demo.regular.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -35,237 +41,233 @@
         .gradient-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.25;
+            filter: blur(120px);
+            opacity: 0.08;
             pointer-events: none;
             z-index: 0;
         }
 
         .orb-1 {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background: var(--orange);
-            top: -100px;
-            right: -100px;
+            top: -150px;
+            right: -150px;
         }
 
         .orb-2 {
-            width: 350px;
-            height: 350px;
+            width: 400px;
+            height: 400px;
             background: var(--teal);
-            bottom: -80px;
-            left: -80px;
+            bottom: -100px;
+            left: -100px;
         }
 
         .orb-3 {
-            width: 300px;
-            height: 300px;
+            width: 450px;
+            height: 450px;
             background: var(--yellow);
-            top: 50%;
-            right: 10%;
+            top: 40%;
+            right: 5%;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 60px 40px;
+            padding: 100px 50px 120px;
             position: relative;
             z-index: 1;
         }
 
         header {
             text-align: center;
-            margin-bottom: 60px;
-            animation: fadeInDown 1s ease-out;
+            margin-bottom: 80px;
+            animation: fadeInDown 0.8s ease-out;
         }
 
         header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 64px;
-            font-weight: 800;
+            font-family: 'Chunko', 'Playfair Display', serif;
+            font-size: 96px;
+            font-weight: bold;
             color: var(--dark-teal);
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
-
-        header p {
-            font-size: 20px;
-            color: var(--dark-teal);
-            opacity: 0.7;
-            font-weight: 400;
-        }
-
-        .stats-bar {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 25px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        .stats-bar .count {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--orange);
-            margin-bottom: 5px;
-        }
-
-        .stats-bar .label {
-            font-size: 16px;
-            color: var(--dark-teal);
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-
-        .connection-status {
-            text-align: center;
-            padding: 15px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .connection-status.connected {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .connection-status.disconnected {
-            background: #fee2e2;
-            color: #991b1b;
+            margin-bottom: 0;
+            letter-spacing: -3px;
+            line-height: 0.9;
         }
 
         .stories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+            gap: 50px;
+            margin-bottom: 100px;
         }
 
-        .story-card {
+        /* Polaroid Card Styles */
+        .polaroid-card {
             background: white;
-            padding: 35px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
+            padding: 20px 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(4, 48, 52, 0.12);
+            transition: all 0.4s ease;
             animation: popIn 0.6s ease-out;
-            border: 2px solid transparent;
+            transform: rotate(-1deg);
         }
 
-        .story-card.new {
+        .polaroid-card.new {
             animation: popInBig 0.8s ease-out;
         }
 
-        .story-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(4, 48, 52, 0.2);
-            border-color: var(--teal);
+        .polaroid-card:nth-child(even) {
+            transform: rotate(1deg);
         }
 
-        .story-card:nth-child(3n+1) {
-            border-top: 4px solid var(--orange);
+        .polaroid-card:nth-child(3n) {
+            transform: rotate(-0.5deg);
         }
 
-        .story-card:nth-child(3n+2) {
-            border-top: 4px solid var(--teal);
+        .polaroid-card:hover {
+            transform: rotate(0deg) translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(4, 48, 52, 0.2);
+            z-index: 10;
         }
 
-        .story-card:nth-child(3n) {
-            border-top: 4px solid var(--yellow);
-        }
-
-        .story-header {
+        /* Photo Area */
+        .polaroid-photo {
+            width: 100%;
+            height: 280px;
+            background: var(--cream);
             margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        .story-card h3 {
+        .polaroid-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* No Photo - Text Display */
+        .polaroid-photo.no-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cream) 0%, #e8d5c4 100%);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .no-image-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .no-image-names {
             font-family: 'Playfair Display', serif;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--dark-teal);
-            margin-bottom: 8px;
+            line-height: 1.3;
         }
 
-        .story-card .pet-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
+        .no-image-pet {
+            font-size: 20px;
             color: var(--teal);
+            margin-top: 8px;
             font-weight: 600;
-            margin-bottom: 18px;
         }
 
-        .story-card .pet-name::before {
-            content: '🐾';
-            font-size: 18px;
+        /* Caption Area (Quote) */
+        .polaroid-caption {
+            text-align: center;
+            padding: 0 10px;
         }
 
-        .story-card p {
-            color: var(--dark-teal);
-            line-height: 1.7;
+        .quote-marks {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: var(--orange);
+            opacity: 0.3;
+            line-height: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .polaroid-quote {
+            font-family: 'Inter', sans-serif;
             font-size: 15px;
-            opacity: 0.85;
-            margin-bottom: 20px;
+            line-height: 1.7;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+            font-style: italic;
+            opacity: 0.8;
         }
 
-        .story-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid rgba(4, 48, 52, 0.1);
-        }
-
-        .story-card .date {
+        .polaroid-attribution {
             font-size: 13px;
             color: var(--dark-teal);
-            opacity: 0.5;
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .story-card .heart-icon {
-            font-size: 20px;
+        .attribution-name {
+            font-weight: 600;
             color: var(--orange);
+        }
+
+        .attribution-pet {
+            font-weight: 600;
+            color: var(--orange);
+        }
+
+        .attribution-separator {
+            font-size: 11px;
+            color: var(--orange);
+            opacity: 0.6;
+        }
+
+        .polaroid-date {
+            font-size: 11px;
+            color: var(--dark-teal);
+            opacity: 0.3;
+            text-align: center;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         @keyframes popIn {
             0% {
                 opacity: 0;
-                transform: scale(0.9) translateY(20px);
+                transform: scale(0.95) translateY(20px) rotate(-1deg);
             }
             100% {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0) rotate(-1deg);
             }
         }
 
         @keyframes popInBig {
             0% {
                 opacity: 0;
-                transform: scale(0.5) translateY(30px);
+                transform: scale(0.8) translateY(30px) rotate(0deg);
             }
-            50% {
-                transform: scale(1.05) translateY(-5px);
+            60% {
+                transform: scale(1.05) translateY(-5px) rotate(-2deg);
             }
             100% {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0) rotate(-1deg);
             }
         }
 
         @keyframes fadeInDown {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -276,7 +278,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -289,41 +291,29 @@
             padding: 100px 40px;
             background: white;
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.1);
-            border: 3px dashed rgba(4, 48, 52, 0.2);
-            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(4, 48, 52, 0.06);
+            border: 2px dashed rgba(4, 48, 52, 0.15);
         }
 
         .empty-state .icon {
-            font-size: 80px;
-            margin-bottom: 25px;
-            opacity: 0.3;
+            font-size: 72px;
+            margin-bottom: 20px;
+            opacity: 0.2;
         }
 
         .empty-state h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--dark-teal);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .empty-state p {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--dark-teal);
-            opacity: 0.6;
+            opacity: 0.5;
             line-height: 1.6;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.01);
-                opacity: 0.95;
-            }
         }
 
         .live-indicator {
@@ -331,17 +321,19 @@
             top: 30px;
             right: 30px;
             background: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--dark-teal);
-            box-shadow: 0 10px 30px rgba(4, 48, 52, 0.2);
-            border: 1.5px solid rgba(4, 48, 52, 0.1);
-            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(4, 48, 52, 0.1);
+            border: 2px solid rgba(4, 48, 52, 0.05);
+            font-weight: 600;
             z-index: 100;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .live-dot {
@@ -358,141 +350,211 @@
                 transform: scale(1);
             }
             50% {
-                opacity: 0.5;
-                transform: scale(1.2);
+                opacity: 0.4;
+                transform: scale(1.3);
             }
         }
 
-        .qr-prompt {
+        .logo {
             position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 35px;
+            left: 35px;
+            z-index: 100;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .qr-section {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qr-code {
+            width: 140px;
+            height: 140px;
+            background: white;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(4, 48, 52, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .qr-code:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(4, 48, 52, 0.2);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .qr-label {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--dark-teal);
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(4, 48, 52, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .qr-label:hover {
             background: var(--dark-teal);
             color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
-            box-shadow: 0 15px 40px rgba(4, 48, 52, 0.3);
-            text-align: center;
-            z-index: 100;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        .qr-prompt p {
-            font-size: 16px;
-            font-weight: 600;
-            margin: 0;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-8px);
-            }
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 48, 52, 0.2);
         }
 
         @media (max-width: 1024px) {
             .container {
-                padding: 50px 30px;
+                padding: 80px 35px 100px;
+            }
+
+            header {
+                margin-bottom: 60px;
             }
 
             header h1 {
-                font-size: 52px;
+                font-size: 72px;
             }
 
             .stories-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 25px;
+                gap: 40px;
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 40px 20px;
+                padding: 60px 25px 90px;
+            }
+
+            header {
+                margin-bottom: 50px;
             }
 
             header h1 {
-                font-size: 42px;
-            }
-
-            header p {
-                font-size: 18px;
-            }
-
-            .stats-bar .count {
-                font-size: 38px;
+                font-size: 56px;
+                letter-spacing: -2px;
             }
 
             .stories-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 30px;
             }
 
-            .story-card {
-                padding: 30px 25px;
+            .polaroid-photo {
+                height: 240px;
             }
 
-            .story-card h3 {
-                font-size: 24px;
+            .polaroid-quote {
+                font-size: 14px;
             }
 
             .qr-prompt {
                 bottom: 20px;
-                padding: 15px 30px;
+                padding: 14px 28px;
             }
 
             .qr-prompt p {
-                font-size: 14px;
+                font-size: 13px;
+            }
+
+            .logo {
+                top: 20px;
+                left: 20px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .qr-section {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .qr-code {
+                width: 110px;
+                height: 110px;
+                padding: 10px;
+            }
+
+            .qr-label {
+                font-size: 11px;
+                padding: 8px 16px;
             }
 
             .live-indicator {
                 top: 20px;
                 right: 20px;
-                font-size: 12px;
-                padding: 10px 20px;
-            }
-
-            .gradient-orb {
-                filter: blur(60px);
-                opacity: 0.2;
-            }
-
-            .orb-1, .orb-2, .orb-3 {
-                width: 250px;
-                height: 250px;
+                font-size: 11px;
+                padding: 8px 16px;
             }
         }
 
         @media (max-width: 480px) {
             header h1 {
-                font-size: 36px;
+                font-size: 44px;
             }
 
-            .stats-bar {
-                padding: 20px;
+            .polaroid-card {
+                padding: 16px 16px 20px;
             }
 
-            .stats-bar .count {
-                font-size: 32px;
+            .polaroid-photo {
+                height: 220px;
+            }
+
+            .no-image-names {
+                font-size: 22px;
+            }
+
+            .no-image-pet {
+                font-size: 18px;
             }
 
             .empty-state {
-                padding: 60px 30px;
+                padding: 70px 30px;
             }
 
             .empty-state .icon {
-                font-size: 60px;
+                font-size: 56px;
             }
 
             .empty-state h3 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
             .empty-state p {
-                font-size: 16px;
+                font-size: 15px;
             }
         }
     </style>
@@ -504,37 +566,36 @@
 
     <div class="live-indicator">
         <div class="live-dot"></div>
-        <span>Live Updates</span>
+        <span>Live</span>
     </div>
 
     <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="logo-heart.svg" alt="PAWtners">
+        </div>
+        
         <header>
-            <h1>🐾 Adoption Stories</h1>
-            <p>Real journeys from real adopters</p>
+            <h1>Adoption Stories</h1>
         </header>
 
-        <div class="connection-status connected" id="connectionStatus">
-            ✓ Connected to Firebase
-        </div>
-
-        <div class="stats-bar">
-            <div class="count" id="storyCount">0</div>
-            <div class="label">Stories Shared</div>
-        </div>
-
         <div id="storiesGrid" class="stories-grid">
-            <!-- Stories will appear here -->
+            <!-- Polaroid cards will appear here -->
         </div>
 
         <div id="emptyState" class="empty-state">
             <div class="icon">📝</div>
-            <h3>Waiting for Stories...</h3>
-            <p>Scan the QR code to share your adoption journey<br>and inspire others to adopt!</p>
+            <h3>Waiting for Stories</h3>
+            <p>Scan the QR code to share your adoption journey</p>
         </div>
     </div>
 
-    <div class="qr-prompt">
-        <p>📱 Scan QR Code to Share Your Story</p>
+    <!-- QR Code Section -->
+    <div class="qr-section">
+        <a href="submission.html" class="qr-code">
+            <img src="SubmissionQR.png" alt="QR Code">
+        </a>
+        <a href="submission.html" class="qr-label">Scan/Click to Share Your Story</a>
     </div>
 
     <!-- Firebase SDK -->
@@ -542,7 +603,6 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // Your Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAcQM4rJHSdvIJDgtw2XsA88rHz5MQCiF8",
             authDomain: "pawtners-stories.firebaseapp.com",
@@ -553,14 +613,11 @@
             appId: "1:188046259694:web:2c9663097851b852f94aff"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
         const storiesGrid = document.getElementById('storiesGrid');
         const emptyState = document.getElementById('emptyState');
-        const storyCountEl = document.getElementById('storyCount');
-        const connectionStatus = document.getElementById('connectionStatus');
 
         let displayedStories = new Set();
 
@@ -570,82 +627,75 @@
             return div.innerHTML;
         }
 
-        // Listen for real-time updates
         const storiesRef = ref(database, 'stories');
         
         onValue(storiesRef, (snapshot) => {
             const data = snapshot.val();
             
             if (!data) {
-                // No stories yet
                 storiesGrid.innerHTML = '';
                 emptyState.style.display = 'block';
-                storyCountEl.textContent = '0';
                 displayedStories.clear();
                 return;
             }
 
-            // Convert to array
             const stories = Object.keys(data).map(key => ({
                 key: key,
                 ...data[key]
             }));
 
-            // Hide empty state
             emptyState.style.display = 'none';
-            storyCountEl.textContent = stories.length;
 
-            // Sort by newest first
             stories.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-            // Check for new stories
             const currentKeys = new Set(stories.map(s => s.key));
             const newStories = stories.filter(s => !displayedStories.has(s.key));
 
-            // Update displayed stories set
             displayedStories = currentKeys;
-
-            // Clear and rebuild grid
             storiesGrid.innerHTML = '';
 
-            // Display all stories
             stories.forEach(story => {
                 const isNew = newStories.some(ns => ns.key === story.key);
                 const card = document.createElement('div');
-                card.className = 'story-card' + (isNew ? ' new' : '');
+                card.className = 'polaroid-card' + (isNew ? ' new' : '');
                 
                 const date = new Date(story.timestamp);
                 const formattedDate = date.toLocaleDateString('en-US', { 
                     month: 'short', 
                     day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    year: 'numeric'
                 });
+
+                // Photo or text display
+                const photoHTML = story.image 
+                    ? `<div class="polaroid-photo">
+                         <img src="${story.image}" alt="${escapeHtml(story.petName)}">
+                       </div>`
+                    : `<div class="polaroid-photo no-image">
+                         <div class="no-image-icon">🐾</div>
+                         <div class="no-image-names">${escapeHtml(story.yourName)}</div>
+                         <div class="no-image-pet">${escapeHtml(story.petName)}</div>
+                       </div>`;
                 
                 card.innerHTML = `
-                    <div class="story-header">
-                        <h3>${escapeHtml(story.yourName)}</h3>
-                        <div class="pet-name">${escapeHtml(story.petName)}</div>
-                    </div>
-                    <p>${escapeHtml(story.story)}</p>
-                    <div class="story-footer">
-                        <div class="date">${formattedDate}</div>
-                        <div class="heart-icon">❤️</div>
+                    ${photoHTML}
+                    <div class="polaroid-caption">
+                        <div class="quote-marks">"</div>
+                        <p class="polaroid-quote">${escapeHtml(story.story)}</p>
+                        <div class="polaroid-attribution">
+                            <span class="attribution-name">${escapeHtml(story.yourName)}</span>
+                            <span class="attribution-separator">❤️</span>
+                            <span class="attribution-pet">${escapeHtml(story.petName)}</span>
+                        </div>
+                        <div class="polaroid-date">${formattedDate}</div>
                     </div>
                 `;
                 
                 storiesGrid.appendChild(card);
             });
 
-            // Update connection status
-            connectionStatus.textContent = '✓ Connected - Live Updates Active';
-            connectionStatus.className = 'connection-status connected';
-
         }, (error) => {
             console.error('Firebase error:', error);
-            connectionStatus.textContent = '⚠ Connection Error';
-            connectionStatus.className = 'connection-status disconnected';
         });
     </script>
 </body>

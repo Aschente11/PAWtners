@@ -8,6 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Chunko';
+            src: url('chunko-bold-demo.regular.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -31,38 +38,56 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 60px 20px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        .logo {
+            position: fixed;
+            top: 35px;
+            left: 50px;
+            z-index: 100;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+        }
+
+        .logo:hover {
+            opacity: 1;
         }
 
         .gradient-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.25;
+            filter: blur(120px);
+            opacity: 0.08;
             pointer-events: none;
             z-index: 0;
         }
 
         .orb-1 {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background: var(--orange);
-            top: -100px;
-            right: -100px;
+            top: -150px;
+            right: -150px;
         }
 
         .orb-2 {
-            width: 350px;
-            height: 350px;
+            width: 400px;
+            height: 400px;
             background: var(--teal);
-            bottom: -80px;
-            left: -80px;
+            bottom: -100px;
+            left: -100px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             position: relative;
             z-index: 1;
@@ -70,87 +95,151 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
 
         header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 8px;
-            font-weight: 800;
+            font-family: 'Chunko', 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: bold;
             color: var(--dark-teal);
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-            line-height: 1.1;
+            margin-bottom: 0;
+            letter-spacing: -2px;
+            line-height: 0.9;
         }
 
-        header p {
-            font-size: 8px;
-            color: var(--dark-teal);
-            opacity: 0.7;
-            font-weight: 400;
-        }
-
-        .submit-section {
+        /* Polaroid Form Card */
+        .polaroid-form {
             background: white;
-            border-radius: 30px;
-            padding: 50px 40px;
-            box-shadow: 0 30px 80px rgba(4, 48, 52, 0.15);
+            padding: 25px 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(4, 48, 52, 0.12);
+            transform: rotate(-0.5deg);
+            transition: all 0.3s ease;
         }
 
-        .section-header {
+        .polaroid-form:hover {
+            transform: rotate(0deg);
+            box-shadow: 0 12px 40px rgba(4, 48, 52, 0.15);
+        }
+
+        /* Image Upload Section - Polaroid Photo Style */
+        .image-upload-section {
+            margin-bottom: 25px;
+        }
+
+        .image-upload-wrapper {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .image-upload-wrapper:hover {
+            background: #e8d5c4;
+        }
+
+        .image-upload-wrapper.has-image {
+            background: transparent;
+        }
+
+        .upload-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            margin-bottom: 35px;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
 
-        .section-tag {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--orange);
-            color: white;
-            border-radius: 30px;
-            font-size: 5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
+        .upload-placeholder-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+            opacity: 0.2;
         }
 
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 6px;
-            font-weight: 700;
-            color: var(--dark-teal);
-            margin-bottom: 10px;
-        }
-
-        .section-header .subtitle {
+        .upload-placeholder-text {
             font-size: 15px;
             color: var(--dark-teal);
-            opacity: 0.6;
-            font-style: italic;
+            opacity: 0.4;
+            font-weight: 500;
+        }
+
+        #imagePreview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        #imagePreview.show {
+            display: block;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .remove-image-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--orange);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .remove-image-btn.show {
+            display: flex;
+        }
+
+        .remove-image-btn:hover {
+            background: var(--dark-teal);
+            transform: scale(1.1);
+        }
+
+        /* Form Caption Area */
+        .form-caption {
+            padding: 5px 10px 0;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--dark-teal);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 16px 20px;
-            border: 1.5px solid rgba(4, 48, 52, 0.2);
-            border-radius: 15px;
-            font-size: 16px;
+            padding: 14px 16px;
+            border: 2px solid rgba(4, 48, 52, 0.08);
+            border-radius: 8px;
+            font-size: 15px;
             font-family: 'Inter', sans-serif;
             color: var(--dark-teal);
             transition: all 0.3s ease;
@@ -162,46 +251,46 @@
             outline: none;
             border-color: var(--teal);
             background: white;
-            box-shadow: 0 0 0 4px rgba(145, 212, 213, 0.1);
         }
 
         .form-group textarea {
-            min-height: 150px;
+            min-height: 120px;
             resize: vertical;
             line-height: 1.6;
+            font-style: italic;
         }
 
         .char-count {
             text-align: right;
-            font-size: 13px;
+            font-size: 11px;
             color: var(--dark-teal);
-            opacity: 0.5;
-            margin-top: 8px;
+            opacity: 0.3;
+            margin-top: 6px;
             font-weight: 500;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 18px 40px;
+            padding: 16px 40px;
             background: var(--dark-teal);
             color: white;
-            border: 1.5px solid var(--dark-teal);
+            border: 2px solid var(--dark-teal);
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .submit-btn:hover:not(:disabled) {
             background: var(--orange);
             border-color: var(--orange);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(243, 110, 35, 0.3);
+            box-shadow: 0 6px 20px rgba(243, 110, 35, 0.3);
         }
 
         .submit-btn:active {
@@ -209,21 +298,21 @@
         }
 
         .submit-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
 
         .success-message {
             display: none;
-            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-            color: white;
+            background: white;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 8px;
             text-align: center;
-            margin-top: 25px;
+            margin-top: 30px;
             animation: slideIn 0.5s ease-out;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 30px rgba(4, 48, 52, 0.12);
+            border: 3px solid var(--teal);
         }
 
         .success-message.show {
@@ -231,35 +320,38 @@
         }
 
         .success-message .icon {
-            font-size: 60px;
+            font-size: 56px;
             margin-bottom: 15px;
-            animation: bounce 0.6s ease-out;
         }
 
         .success-message strong {
             display: block;
-            font-size: 24px;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
             margin-bottom: 10px;
             font-weight: 700;
+            color: var(--dark-teal);
         }
 
         .success-message p {
-            font-size: 16px;
-            opacity: 0.95;
+            font-size: 15px;
+            opacity: 0.7;
             margin: 0;
+            color: var(--dark-teal);
         }
 
         .error-message {
             display: none;
-            background: #fee;
+            background: white;
             color: #c41e3a;
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 8px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 14px;
             font-weight: 500;
-            border: 2px solid #fcc;
+            border: 3px solid #fcc;
+            box-shadow: 0 8px 30px rgba(196, 30, 58, 0.1);
         }
 
         .error-message.show {
@@ -269,7 +361,7 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
             to {
                 opacity: 1;
@@ -277,79 +369,88 @@
             }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
         footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
+            margin-top: 35px;
+            font-size: 12px;
             color: var(--dark-teal);
-            opacity: 0.6;
+            opacity: 0.4;
+        }
+
+        .view-stories-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--dark-teal);
+            border: 2px solid var(--dark-teal);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+        }
+
+        .view-stories-btn:hover {
+            background: var(--dark-teal);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 48, 52, 0.2);
+        }
+
+        .view-stories-btn:active {
+            transform: translateY(0);
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 20px 15px;
+                padding: 40px 20px;
             }
 
             header h1 {
-                font-size: 38px;
+                font-size: 56px;
+                letter-spacing: -1.5px;
             }
 
-            header p {
-                font-size: 16px;
+            .polaroid-form {
+                padding: 20px 20px 25px;
             }
 
-            .submit-section {
-                padding: 35px 25px;
-                border-radius: 24px;
-            }
-
-            .section-header h2 {
-                font-size: 28px;
+            .image-upload-wrapper {
+                height: 280px;
             }
 
             .form-group input,
             .form-group textarea {
-                padding: 14px 18px;
-                font-size: 15px;
-            }
-
-            .submit-btn {
-                padding: 16px 36px;
+                padding: 12px 14px;
                 font-size: 14px;
             }
 
-            .gradient-orb {
-                filter: blur(60px);
-                opacity: 0.2;
-            }
-
-            .orb-1, .orb-2 {
-                width: 250px;
-                height: 250px;
+            .submit-btn {
+                padding: 14px 36px;
+                font-size: 12px;
             }
         }
 
         @media (max-width: 480px) {
             header h1 {
-                font-size: 32px;
+                font-size: 44px;
             }
 
-            .submit-section {
-                padding: 30px 20px;
+            .polaroid-form {
+                padding: 18px 18px 22px;
             }
 
-            .section-header h2 {
-                font-size: 24px;
+            .image-upload-wrapper {
+                height: 240px;
             }
 
-            .section-tag {
-                font-size: 11px;
-                padding: 6px 16px;
+            .upload-placeholder-icon {
+                font-size: 48px;
             }
         }
     </style>
@@ -358,50 +459,70 @@
     <div class="gradient-orb orb-1"></div>
     <div class="gradient-orb orb-2"></div>
 
+    <!-- Logo -->
+    <div class="logo">
+        <img src="logo-heart.svg" alt="PAWtners">
+    </div>
+
     <div class="container">
         <header>
-            <h1>🐾 Share Your Story</h1>
-            <p>Tell us about your rescue journey</p>
+            <h1>Share Your Story</h1>
         </header>
 
-        <div class="submit-section">
-            <div class="section-header">
-                <span class="section-tag">Adoption Stories</span>
-            </div>
-
+        <div class="polaroid-form">
             <form id="storyForm">
-                <div class="form-group">
-                    <label for="yourName">Your Name *</label>
-                    <input type="text" id="yourName" required placeholder="Enter your name" maxlength="50">
-                </div>
-                
-                <div class="form-group">
-                    <label for="petName">Pet's Name *</label>
-                    <input type="text" id="petName" required placeholder="Enter your pet's name" maxlength="50">
-                </div>
-                
-                <div class="form-group">
-                    <label for="story">Your Story *</label>
-                    <textarea id="story" required placeholder="Share your adoption journey... How did you meet? What makes your pet special? How has your life changed?" maxlength="500"></textarea>
-                    <div class="char-count">
-                        <span id="charCount">0</span>/500 characters
+                <!-- Polaroid Photo Area -->
+                <div class="image-upload-section">
+                    <div class="image-upload-wrapper" id="uploadWrapper">
+                        <input type="file" id="imageInput" accept="image/*">
+                        <img id="imagePreview" alt="Preview">
+                        <div class="upload-placeholder" id="uploadPlaceholder">
+                            <div class="upload-placeholder-icon">📷</div>
+                            <div class="upload-placeholder-text">Click to add photo</div>
+                        </div>
+                        <button type="button" class="remove-image-btn" id="removeImageBtn">×</button>
                     </div>
                 </div>
-                
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    Share My Story
-                </button>
-            </form>
-            
-            <div class="success-message" id="successMessage">
-                <div class="icon">🎉</div>
-                <strong>Story Shared!</strong>
-                <p>Your story will appear on the display wall in seconds!</p>
-            </div>
 
-            <div class="error-message" id="errorMessage">
-                ⚠️ Unable to save story. Please check your connection and try again.
-            </div>
+                <!-- Polaroid Caption Area -->
+                <div class="form-caption">
+                    <div class="form-group">
+                        <label for="yourName">Your Name *</label>
+                        <input type="text" id="yourName" required placeholder="Your name" maxlength="50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="petName">Pet's Name *</label>
+                        <input type="text" id="petName" required placeholder="Pet's name" maxlength="50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story">Your Story *</label>
+                        <textarea id="story" required placeholder="Share your adoption journey..." maxlength="500"></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span>/500
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Share Story
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <div class="icon">🎉</div>
+            <strong>Story Shared!</strong>
+            <p>Your story will appear on the wall shortly</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            ⚠️ Unable to save story. Please try again.
+        </div>
+
+        <div style="text-align: center;">
+            <a href="stories.html" class="view-stories-btn">See Stories of Others</a>
         </div>
 
         <footer>
@@ -414,7 +535,6 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getDatabase, ref, push, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // Your Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAcQM4rJHSdvIJDgtw2XsA88rHz5MQCiF8",
             authDomain: "pawtners-stories.firebaseapp.com",
@@ -425,37 +545,69 @@
             appId: "1:188046259694:web:2c9663097851b852f94aff"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Form elements
+        // Elements
         const form = document.getElementById('storyForm');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadWrapper = document.getElementById('uploadWrapper');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        const removeImageBtn = document.getElementById('removeImageBtn');
         const storyTextarea = document.getElementById('story');
         const charCount = document.getElementById('charCount');
         const successMessage = document.getElementById('successMessage');
         const errorMessage = document.getElementById('errorMessage');
         const submitBtn = document.getElementById('submitBtn');
 
+        let imageData = null;
+
+        // Image upload handling
+        uploadWrapper.addEventListener('click', () => {
+            if (!imagePreview.classList.contains('show')) {
+                imageInput.click();
+            }
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imageData = e.target.result;
+                    imagePreview.src = imageData;
+                    imagePreview.classList.add('show');
+                    uploadPlaceholder.style.display = 'none';
+                    removeImageBtn.classList.add('show');
+                    uploadWrapper.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removeImageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            imageData = null;
+            imagePreview.src = '';
+            imagePreview.classList.remove('show');
+            uploadPlaceholder.style.display = 'block';
+            removeImageBtn.classList.remove('show');
+            uploadWrapper.classList.remove('has-image');
+            imageInput.value = '';
+        });
+
         // Character counter
         storyTextarea.addEventListener('input', () => {
             const length = storyTextarea.value.length;
             charCount.textContent = length;
-            
-            if (length >= 500) {
-                charCount.style.color = 'var(--orange)';
-                charCount.style.opacity = '1';
-            } else {
-                charCount.style.color = 'var(--dark-teal)';
-                charCount.style.opacity = '0.5';
-            }
+            charCount.style.opacity = length >= 450 ? '1' : '0.3';
         });
 
         // Form submission
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Disable button and show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
             errorMessage.classList.remove('show');
@@ -465,29 +617,30 @@
                 yourName: document.getElementById('yourName').value.trim(),
                 petName: document.getElementById('petName').value.trim(),
                 story: document.getElementById('story').value.trim(),
+                image: imageData || null,
                 timestamp: new Date().toISOString(),
                 id: Date.now()
             };
 
             try {
-                // Save to Firebase
                 const storiesRef = ref(database, 'stories');
                 const newStoryRef = push(storiesRef);
                 await set(newStoryRef, newStory);
 
-                // Show success message
                 successMessage.classList.add('show');
                 submitBtn.textContent = '✓ Submitted!';
                 submitBtn.style.background = '#22c55e';
                 submitBtn.style.borderColor = '#22c55e';
                 
-                // Reset form after 3 seconds
                 setTimeout(() => {
                     form.reset();
                     charCount.textContent = '0';
+                    if (imageData) {
+                        removeImageBtn.click();
+                    }
                     successMessage.classList.remove('show');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Share My Story';
+                    submitBtn.textContent = 'Share Story';
                     submitBtn.style.background = 'var(--dark-teal)';
                     submitBtn.style.borderColor = 'var(--dark-teal)';
                 }, 3000);
@@ -497,7 +650,7 @@
                 errorMessage.textContent = '⚠️ Error: ' + error.message;
                 errorMessage.classList.add('show');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Share My Story';
+                submitBtn.textContent = 'Share Story';
             }
         });
     </script>

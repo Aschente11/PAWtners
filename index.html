@@ -59,6 +59,11 @@
         will-change: transform, opacity;
     }
 
+    /* Human standing appears immediately */
+    #humanStanding {
+        opacity: 1;
+    }
+
     /* Human standing */
     #humanStanding {
         width: 250px;
@@ -268,11 +273,10 @@ function animate() {
     if (isMobile) petOffset = 100;
     if (isSmallMobile) petOffset = 75;
 
-    /* Phase 1 — Human appears with gentle fade (0–15%) */
+    /* Phase 1 — Human stays visible (0–15%) */
     if (p <= 15) {
-        let t = easeInOutCubic(p / 15);
-        humanStanding.style.opacity = t;
-        humanStanding.style.transform = `translate(-50%, -50%) scale(${0.8 + (t * 0.2)})`;
+        humanStanding.style.opacity = 1;
+        humanStanding.style.transform = 'translate(-50%, -50%) scale(1)';
     }
 
     /* Phase 2 — Human stays standing, pets appear and start running (15–25%) */
